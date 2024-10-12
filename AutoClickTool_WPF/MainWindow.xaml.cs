@@ -120,12 +120,27 @@ namespace AutoClickTool_WPF
     {
         public static void HotKeyAction_Script_EnableSwitch()
         {
-
+            SystemSetting.GetGameWindow();
+            int i = GameFunction.getEnemyCoor(false);
+            if (i > 0)
+            {
+                GameFunction.castSpellOnTarget(Coordinate.Enemy[i - 1, 0], Coordinate.Enemy[i - 1, 1], Key.F5, 50);
+            }
         }
     }
 
     public class GameFunction
     {
+        public static void castSpellOnTarget(int x, int y, Key keyCode, int delay)
+        {
+            /*
+                滑鼠移動到指定座標後 , 按下指定熱鍵 , 點下左鍵
+             */
+            KeyboardSimulator.KeyPress(keyCode);
+            Thread.Sleep(100);
+            MouseSimulator.LeftMousePress(x, y);
+            Thread.Sleep(delay);
+        }
         public static bool NormalCheck(bool IsDebug)
         {
 
@@ -243,7 +258,6 @@ namespace AutoClickTool_WPF
             return 0;
         }
     }
-
     public class BitmapFunction
     {
         public static double CalculateColorRatio(Bitmap bitmap, System.Drawing.Color targetColor)
@@ -444,6 +458,98 @@ namespace AutoClickTool_WPF
                 for (int i = 0; i < 10; i++)
                     enemyGetBmp[i].Save("Enemy_" + i + "_" + "x" + Coordinate.checkEnemy[i, 0] + xOffset + "_" + "y" + Coordinate.checkEnemy[i, 1] + yOffset + "_" + ".bmp");
             }
+        }
+    }
+    public class MouseSimulator
+    {
+        // 匯入User32.dll中的函數
+        [DllImport("user32.dll")]
+        public static extern void mouse_event(uint dwFlags, int dx, int dy, uint dwData, UIntPtr dwExtraInfo);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetCursorPos(int X, int Y);
+
+        // 模擬滑鼠左鍵按下及釋放
+        private const int MOUSEEVENTF_LEFTDOWN = 0x0002;
+        private const int MOUSEEVENTF_LEFTUP = 0x0004;
+        // 模擬滑鼠右鍵按下及釋放
+        private const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
+        private const int MOUSEEVENTF_RIGHTUP = 0x0010;
+        private const int MOUSEEVENTF_ABSOLUTE = 0x8000;
+
+        // WPF UI 執行緒安全的滑鼠左鍵按下方法
+        public static void LeftMousePress(int x, int y)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // 移動滑鼠到指定座標
+                SetCursorPos(x, y);
+                // 模擬滑鼠左鍵按下
+                mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_ABSOLUTE, 0, 0, 0, UIntPtr.Zero);
+                Thread.Sleep(50); // 延遲一段時間
+                                  // 模擬滑鼠左鍵釋放
+                mouse_event(MOUSEEVENTF_LEFTUP | MOUSEEVENTF_ABSOLUTE, 0, 0, 0, UIntPtr.Zero);
+            });
+        }
+
+        // WPF UI 執行緒安全的滑鼠右鍵按下方法
+        public static void RightMousePress(int x, int y)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // 移動滑鼠到指定座標
+                SetCursorPos(x, y);
+
+                // 模擬滑鼠右鍵按下
+                mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, UIntPtr.Zero);
+                Thread.Sleep(50); // 延遲一段時間
+
+                // 模擬滑鼠右鍵釋放
+                mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, UIntPtr.Zero);
+            });
+        }
+    }
+    public class KeyboardSimulator
+    {
+        // 匯入 user32.dll 中的 keybd_event 函數
+        [DllImport("user32.dll")]
+        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+
+        // 定義按鍵事件的標誌
+        private const int KEYEVENTF_EXTENDEDKEY = 0x0001;
+        private const int KEYEVENTF_KEYUP = 0x0002;
+
+        // 模擬按下按鍵
+        public static void KeyDown(Key key)
+        {
+            byte keyCode = (byte)KeyInterop.VirtualKeyFromKey(key);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                keybd_event(keyCode, 0, KEYEVENTF_EXTENDEDKEY, UIntPtr.Zero);
+            });
+        }
+
+        // 模擬釋放按鍵
+        public static void KeyUp(Key key)
+        {
+            byte keyCode = (byte)KeyInterop.VirtualKeyFromKey(key);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                keybd_event(keyCode, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, UIntPtr.Zero);
+            });
+        }
+
+        // 模擬按下並釋放按鍵
+        public static void KeyPress(Key key)
+        {
+            byte keyCode = (byte)KeyInterop.VirtualKeyFromKey(key);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                KeyDown(key);
+                Thread.Sleep(50); // 延遲一段時間
+                KeyUp(key);
+            });
         }
     }
     public class SystemSetting
