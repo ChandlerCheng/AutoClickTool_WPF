@@ -8,8 +8,8 @@
         Name="mainApp"
         Title="MainWindow" Height="300" Width="300">
     <Grid>
-        <TabControl Name="tabControlUsingMethod">
-            <TabItem Name="testFunctionTab" Header="{DynamicResource tabTestFunction}" >
+        <TabControl Name="tabControlUsingMethod" SelectionChanged ="tabControlUsingMethod_SelectionChanged">
+            <TabItem Name="tabTestFunction" Header="{DynamicResource tabTestFunction}" >
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Vertical" Width="80">
@@ -20,7 +20,7 @@
                     </StackPanel>
                 </StackPanel>
             </TabItem>
-            <TabItem Name="Tab2">
+            <TabItem Name="tabAutoBattle" Header="{DynamicResource tabAutoBattle}">
                 
             </TabItem>
         </TabControl>

@@ -29,6 +29,8 @@ namespace AutoClickTool_WPF
     {
         private static Task actionTask;
         private static bool isEnable = false;
+        private static bool isWindowLoaded = false;
+        private static int tabFunctionSelected = 0;
         private static CancellationTokenSource cancellationTokenSource;
         #region 程式初始化
         public MainWindow()
@@ -52,9 +54,13 @@ namespace AutoClickTool_WPF
         #region 遊戲中動作
         private static void BattleLoop()
         {
-            if (GameFunction.BattleCheck_Player(false) == true)
+            switch (tabFunctionSelected)
             {
-
+                case 2:
+                    GameScript.AutoBattle();
+                    break;
+                default:
+                    break;
             }
         }
         #endregion
@@ -68,7 +74,7 @@ namespace AutoClickTool_WPF
                     // 更新視窗的 Title
                     window.Dispatcher.Invoke(() =>
                     {
-                        window.Title = $"啟動中...";
+                        window.Title = $"'{tabFunctionSelected}'啟動中...";
                     });
                     isEnable = false;
                 }
@@ -85,12 +91,14 @@ namespace AutoClickTool_WPF
         }
         public static async void HotKeyAction_Script_EnableSwitch(MainWindow window)
         {
+#if !DEBUG
             SystemSetting.GetGameWindow();
             if (Coordinate.IsGetWindows != true)
             {
                 MessageBox.Show($"遊戲尚未啟動或發生錯誤");
+                return;
             }
-
+#endif
             // 檢查是否已經有一個執行中的任務
             if (actionTask != null && !actionTask.IsCompleted)
             {
@@ -189,8 +197,64 @@ namespace AutoClickTool_WPF
             DebugFunction.captureAllEnemyDotScreen();
         }
         #endregion
-    }
 
+        private void tabControlUsingMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // 檢查視窗是否已完全載入
+            if (!isWindowLoaded)
+                return;  // 如果視窗尚未載入完成，直接返回
+
+            // 確認選中項是 TabItem
+            if (e.Source is TabControl)
+            {
+                TabItem selectedTab = (sender as TabControl).SelectedItem as TabItem;
+                if (selectedTab != null)
+                {
+                    // 根據選中的 Tab 執行相應的邏輯
+                    switch (selectedTab.Name)
+                    {
+                        case "tabTestFunction":
+                            tabFunctionSelected = 1;
+                            break;
+                        case "tabAutoBattle":
+                            tabFunctionSelected = 2;
+                            break;
+                        case "testFunctionTab3":
+                            tabFunctionSelected = 3;
+                            break;
+                    }
+                }
+            }
+        }
+    }
+    public class GameScript
+    {
+        private static int pollingEnemyIndex = 0;
+        public static void AutoBattle()
+        {
+            if (GameFunction.BattleCheck_Player(false) == true)
+            {
+                int i = GameFunction.getEnemyCoor(false);
+                if (i > 0)
+                {
+                    GameFunction.castSpellOnTarget(Coordinate.Enemy[i - 1, 0], Coordinate.Enemy[i - 1, 1], Key.F5, 10);
+                    return;
+                }
+                GameFunction.castSpellOnTarget(Coordinate.Enemy[pollingEnemyIndex, 0], Coordinate.Enemy[pollingEnemyIndex, 1], Key.F5, 10);
+                /* 若無法正常取得怪物座標 , 則直接朝所有怪物位置循環點擊 , 最差頂多讀條一半 */
+                pollingEnemyIndex++;
+                if (pollingEnemyIndex > 9)
+                    pollingEnemyIndex = 0;
+            }
+            else if (GameFunction.BattleCheck_Pet(false) == true)
+            {
+                GameFunction.pressDefendButton();
+            }
+            else
+            { 
+            }
+        }
+    }
     public class GameFunction
     {
         public static void castSpellOnTarget(int x, int y, Key keyCode, int delay)
@@ -281,6 +345,23 @@ namespace AutoClickTool_WPF
                 return true;
             else
                 return false;
+        }
+
+        public static void pressDefendButton()
+        {
+            /*
+                有小bug , 會變成點擊原先停點上的怪物 , 而不是指向防禦按鈕
+                
+                20240510 : 加入 Cursor.Position = new System.Drawing.Point(x, y); 才確保會移動到正確位置上。
+             */
+            int xOffset = Coordinate.windowBoxLineOffset + Coordinate.windowTop[0];
+            int yOffset = Coordinate.windowHOffset + 1 + Coordinate.windowTop[1];
+            int x, y;
+            x = 779 + xOffset;
+            y = 68 + yOffset;
+            MouseSimulator.LeftMousePress(x, y);
+            Thread.Sleep(50);
+            MouseSimulator.MoveMouseTo(407, 260);
         }
         public static int getEnemyCoor(bool IsDebug)
         {
@@ -524,6 +605,14 @@ namespace AutoClickTool_WPF
     }
     public class MouseSimulator
     {
+        public struct POINT
+        {
+            public int X;
+            public int Y;
+        }
+        // 匯入 GetCursorPos 函數
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorPos(out POINT lpPoint);
         // 匯入User32.dll中的函數
         [DllImport("user32.dll")]
         public static extern void mouse_event(uint dwFlags, int dx, int dy, uint dwData, UIntPtr dwExtraInfo);
@@ -539,7 +628,6 @@ namespace AutoClickTool_WPF
         private const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
         private const int MOUSEEVENTF_RIGHTUP = 0x0010;
         private const int MOUSEEVENTF_ABSOLUTE = 0x8000;
-
         // WPF UI 執行緒安全的滑鼠左鍵按下方法
         public static void LeftMousePress(int x, int y)
         {
@@ -550,7 +638,6 @@ namespace AutoClickTool_WPF
                 // 模擬滑鼠左鍵按下
                 mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_ABSOLUTE, 0, 0, 0, UIntPtr.Zero);
                 Thread.Sleep(50); // 延遲一段時間
-                                  // 模擬滑鼠左鍵釋放
                 mouse_event(MOUSEEVENTF_LEFTUP | MOUSEEVENTF_ABSOLUTE, 0, 0, 0, UIntPtr.Zero);
             });
         }
@@ -569,6 +656,15 @@ namespace AutoClickTool_WPF
 
                 // 模擬滑鼠右鍵釋放
                 mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, UIntPtr.Zero);
+            });
+        }
+        // WPF UI 執行緒安全的移動滑鼠位置
+        public static void MoveMouseTo(int x, int y)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // 移動滑鼠到指定座標
+                SetCursorPos(x, y);
             });
         }
     }

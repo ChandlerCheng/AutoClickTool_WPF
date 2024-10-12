@@ -5,7 +5,8 @@
         
     <!-- Tab Content -->
     <system:String x:Key="tabTestFunction">測試功能</system:String>
-    <!-- TestFunction Content -->
+    <system:String x:Key="tabAutoBattle">自動打怪</system:String>
+    <!-- tabTestFunction Content -->
     <system:String x:Key="btnCurrentStatusCheck">當前狀態檢測</system:String>
     <system:String x:Key="btnGetEnemyIndex">取得怪物次序</system:String>
     <system:String x:Key="btnGetEnemyIndexBmp">取得怪物點圖</system:String>
