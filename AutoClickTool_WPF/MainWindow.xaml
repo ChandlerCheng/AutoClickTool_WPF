@@ -8,140 +8,161 @@
         Name="mainApp"
         Title="{DynamicResource windowTitle}" Height="300" Width="300">
     <Grid>
-        <TabControl Name="tabControlUsingMethod" SelectionChanged ="tabControlUsingMethod_SelectionChanged" TabStripPlacement="Top">
-            <TabItem Name="tabTestFunction" Header="{DynamicResource tabTestFunction}" >
-                <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- 主內容區域 -->
+            <RowDefinition Height="Auto" />
+            <!-- 底部的 StackPanel -->
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="{DynamicResource labelVersion}"></Label>
+                <Label Content="{DynamicResource labelVersionNumber}"></Label>
+            </StackPanel>
+            <TabControl Name="tabControlUsingMethod" SelectionChanged ="tabControlUsingMethod_SelectionChanged" TabStripPlacement="Top">
+                <TabItem Name="tabTestFunction" Header="{DynamicResource tabTestFunction}" >
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical" Width="200">
+                                <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnCurrentStatusCheck" Height="40" Click="btnCurrentStatusCheck_Click" Content="{DynamicResource btnCurrentStatusCheck}"></Button>
+                                <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetEnemyIndex" Height="40" Click="btnGetEnemyIndex_Click" Content="{DynamicResource btnGetEnemyIndex}"></Button>
+                                <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetEnemyIndexBmp" Height="40" Click="btnGetEnemyIndexBmp_Click" Content="{DynamicResource btnGetEnemyIndexBmp}"></Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Name="tabAutoBattle" Header="{DynamicResource tabAutoBattle}">
                     <StackPanel Orientation="Horizontal">
-                        <StackPanel Orientation="Vertical" Width="80">
-                            <Button Name="btnCurrentStatusCheck" Height="40" Click="btnCurrentStatusCheck_Click" Content="{DynamicResource btnCurrentStatusCheck}"></Button>
-                            <Button Name="btnGetEnemyIndex" Height="40" Click="btnGetEnemyIndex_Click" Content="{DynamicResource btnGetEnemyIndex}"></Button>
-                            <Button Name="btnGetEnemyIndexBmp" Height="40" Click="btnGetEnemyIndexBmp_Click" Content="{DynamicResource btnGetEnemyIndexBmp}"></Button>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelAttackKey}"></Label>
+                                <Label Content="F5"></Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelPetSupport}"></Label>
+                                <CheckBox Name="tab2CheckPetSupport" Checked="checkPetSupport_Checked" Unchecked="checkPetSupport_Unchecked"></CheckBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
+                                <Label Content="F5"></Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
+                                <ComboBox Name="tab2comboPetSupportTarget" SelectionChanged ="tab2comboPetSupportTarget_SelectionChanged" SelectedIndex="0">
+                                    <ComboBoxItem Content="{DynamicResource target1}" />
+                                    <ComboBoxItem Content="{DynamicResource target2}" />
+                                    <ComboBoxItem Content="{DynamicResource target3}" />
+                                    <ComboBoxItem Content="{DynamicResource target4}" />
+                                    <ComboBoxItem Content="{DynamicResource target5}" />
+                                </ComboBox>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </TabItem>
-            <TabItem Name="tabAutoBattle" Header="{DynamicResource tabAutoBattle}">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelAttackKey}"></Label>
-                            <Label Content="F5"></Label>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelPetSupport}"></Label>
-                            <CheckBox Name="tab2CheckPetSupport" Checked="checkPetSupport_Checked" Unchecked="checkPetSupport_Unchecked"></CheckBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" >
-                            <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
-                            <Label Content="F5"></Label>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
-                            <ComboBox Name="tab2comboPetSupportTarget" SelectionChanged ="tab2comboPetSupportTarget_SelectionChanged" SelectedIndex="0">
-                                <ComboBoxItem Content="{DynamicResource target1}" />
-                                <ComboBoxItem Content="{DynamicResource target2}" />
-                                <ComboBoxItem Content="{DynamicResource target3}" />
-                                <ComboBoxItem Content="{DynamicResource target4}" />
-                                <ComboBoxItem Content="{DynamicResource target5}" />
-                            </ComboBox>
-                        </StackPanel>
-                    </StackPanel>
-                </StackPanel>
-            </TabItem>
-            <TabItem Name="tabAutoDefend" Header="{DynamicResource tabAutoDefend}">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelAttackKey}"></Label>
-                            <Label Content="F5"></Label>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelPetSupport}"></Label>
-                            <CheckBox Name="tab3CheckPetSupport" Checked="checkPetSupport_Checked" Unchecked="checkPetSupport_Unchecked"></CheckBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" >
-                            <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
-                            <Label Content="F5"></Label>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
-                            <ComboBox Name="tab3comboPetSupportTarget" SelectionChanged ="tab3comboPetSupportTarget_SelectionChanged" SelectedIndex="0">
-                                <ComboBoxItem Content="{DynamicResource target1}" />
-                                <ComboBoxItem Content="{DynamicResource target2}" />
-                                <ComboBoxItem Content="{DynamicResource target3}" />
-                                <ComboBoxItem Content="{DynamicResource target4}" />
-                                <ComboBoxItem Content="{DynamicResource target5}" />
-                            </ComboBox>
+                </TabItem>
+                <TabItem Name="tabAutoDefend" Header="{DynamicResource tabAutoDefend}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelAttackKey}"></Label>
+                                <Label Content="F5"></Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelPetSupport}"></Label>
+                                <CheckBox Name="tab3CheckPetSupport" Checked="checkPetSupport_Checked" Unchecked="checkPetSupport_Unchecked"></CheckBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
+                                <Label Content="F5"></Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
+                                <ComboBox Name="tab3comboPetSupportTarget" SelectionChanged ="tab3comboPetSupportTarget_SelectionChanged" SelectedIndex="0">
+                                    <ComboBoxItem Content="{DynamicResource target1}" />
+                                    <ComboBoxItem Content="{DynamicResource target2}" />
+                                    <ComboBoxItem Content="{DynamicResource target3}" />
+                                    <ComboBoxItem Content="{DynamicResource target4}" />
+                                    <ComboBoxItem Content="{DynamicResource target5}" />
+                                </ComboBox>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </TabItem>
-            <TabItem Name="tabAutoEnterBattle" Header="{DynamicResource tabEnterBattleKey}">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelEnterBattleKey}"></Label>
-                            <Label Content="F5"></Label>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelPetSupport}"></Label>
-                            <CheckBox Name="tab4CheckPetSupport" Checked="checkPetSupport_Checked" Unchecked="checkPetSupport_Unchecked"></CheckBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" >
-                            <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
-                            <Label Content="F5"></Label>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
-                            <ComboBox Name="tab4comboPetSupportTarget" SelectionChanged ="tab4comboPetSupportTarget_SelectionChanged" SelectedIndex="0">
-                                <ComboBoxItem Content="{DynamicResource target1}" />
-                                <ComboBoxItem Content="{DynamicResource target2}" />
-                                <ComboBoxItem Content="{DynamicResource target3}" />
-                                <ComboBoxItem Content="{DynamicResource target4}" />
-                                <ComboBoxItem Content="{DynamicResource target5}" />
-                            </ComboBox>
-                        </StackPanel>
-                    </StackPanel>
-                </StackPanel>
-            </TabItem>
-            <TabItem Name="tabAutoBuff" Header="{DynamicResource tabBuffTarget}">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelBuffKey}"></Label>
-                            <Label Content="F5"></Label>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelBuffTarget}"></Label>
-                            <ComboBox Name="tab5comboAutoBuffTarget" SelectionChanged ="tab5comboAutoBuffTarget_SelectionChanged" SelectedIndex="0">
-                                <ComboBoxItem Content="{DynamicResource target1}" />
-                                <ComboBoxItem Content="{DynamicResource target2}" />
-                                <ComboBoxItem Content="{DynamicResource target3}" />
-                                <ComboBoxItem Content="{DynamicResource target4}" />
-                                <ComboBoxItem Content="{DynamicResource target5}" />
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelPetSupport}"></Label>
-                            <CheckBox Name="tab5CheckPetSupport" Checked="checkPetSupport_Checked" Unchecked="checkPetSupport_Unchecked"></CheckBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" >
-                            <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
-                            <Label Content="F5"></Label>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
-                            <ComboBox Name="tab5comboPetSupportTarget" SelectionChanged ="tab5comboPetSupportTarget_SelectionChanged" SelectedIndex="0">
-                                <ComboBoxItem Content="{DynamicResource target1}" />
-                                <ComboBoxItem Content="{DynamicResource target2}" />
-                                <ComboBoxItem Content="{DynamicResource target3}" />
-                                <ComboBoxItem Content="{DynamicResource target4}" />
-                                <ComboBoxItem Content="{DynamicResource target5}" />
-                            </ComboBox>
+                </TabItem>
+                <TabItem Name="tabAutoEnterBattle" Header="{DynamicResource tabEnterBattleKey}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelEnterBattleKey}"></Label>
+                                <Label Content="F5"></Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelPetSupport}"></Label>
+                                <CheckBox Name="tab4CheckPetSupport" Checked="checkPetSupport_Checked" Unchecked="checkPetSupport_Unchecked"></CheckBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
+                                <Label Content="F5"></Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
+                                <ComboBox Name="tab4comboPetSupportTarget" SelectionChanged ="tab4comboPetSupportTarget_SelectionChanged" SelectedIndex="0">
+                                    <ComboBoxItem Content="{DynamicResource target1}" />
+                                    <ComboBoxItem Content="{DynamicResource target2}" />
+                                    <ComboBoxItem Content="{DynamicResource target3}" />
+                                    <ComboBoxItem Content="{DynamicResource target4}" />
+                                    <ComboBoxItem Content="{DynamicResource target5}" />
+                                </ComboBox>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </TabItem>
-        </TabControl>
+                </TabItem>
+                <TabItem Name="tabAutoBuff" Header="{DynamicResource tabBuffTarget}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelBuffKey}"></Label>
+                                <Label Content="F5"></Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelBuffTarget}"></Label>
+                                <ComboBox Name="tab5comboAutoBuffTarget" SelectionChanged ="tab5comboAutoBuffTarget_SelectionChanged" SelectedIndex="0">
+                                    <ComboBoxItem Content="{DynamicResource target1}" />
+                                    <ComboBoxItem Content="{DynamicResource target2}" />
+                                    <ComboBoxItem Content="{DynamicResource target3}" />
+                                    <ComboBoxItem Content="{DynamicResource target4}" />
+                                    <ComboBoxItem Content="{DynamicResource target5}" />
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelPetSupport}"></Label>
+                                <CheckBox Name="tab5CheckPetSupport" Checked="checkPetSupport_Checked" Unchecked="checkPetSupport_Unchecked"></CheckBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
+                                <Label Content="F5"></Label>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
+                                <ComboBox Name="tab5comboPetSupportTarget" SelectionChanged ="tab5comboPetSupportTarget_SelectionChanged" SelectedIndex="0">
+                                    <ComboBoxItem Content="{DynamicResource target1}" />
+                                    <ComboBoxItem Content="{DynamicResource target2}" />
+                                    <ComboBoxItem Content="{DynamicResource target3}" />
+                                    <ComboBoxItem Content="{DynamicResource target4}" />
+                                    <ComboBoxItem Content="{DynamicResource target5}" />
+                                </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal"  Grid.Row="1">
+            <Label Content="{DynamicResource labelLanguage}"></Label>
+            <ComboBox Name="comboLanguage" SelectionChanged="comboLanguage_SelectionChanged">
+                <ComboBoxItem Content="English" Tag="en-US" />
+                <ComboBoxItem Content="繁體中文" Tag="zh-TW" />
+            </ComboBox>
+        </StackPanel>
     </Grid>
 </Window>

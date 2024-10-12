@@ -1,0 +1,44 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:AutoClickTool_WPF">
+    <!-- Window Content -->
+    <system:String x:Key="windowTitle">Fairy Tale Assistant</system:String>
+    <!-- Label Version Content -->
+    <system:String x:Key="labelVersion">Version:</system:String>
+    <system:String x:Key="labelVersionNumber">1.0.0</system:String>
+    <!-- Language Content -->
+    <system:String x:Key="labelLanguage">Language:</system:String>
+    <!-- Tab Content -->
+    <system:String x:Key="tabTestFunction">Test Functions</system:String>
+    <system:String x:Key="tabAutoBattle">Auto Battle</system:String>
+    <system:String x:Key="tabAutoDefend">Auto Defense</system:String>
+    <system:String x:Key="tabEnterBattleKey">Auto Summon</system:String>
+    <system:String x:Key="tabBuffTarget">Auto Buff</system:String>
+    <!-- tabTestFunction Content -->
+    <system:String x:Key="btnCurrentStatusCheck">Check Current Status</system:String>
+    <system:String x:Key="btnGetEnemyIndex">Get Enemy Order</system:String>
+    <system:String x:Key="btnGetEnemyIndexBmp">Get Enemy Point Bitmap</system:String>
+
+    <!-- labelPetSupport Content -->
+    <system:String x:Key="labelPetSupport">Pet Support</system:String>
+    <system:String x:Key="labelPetSupportKey">Pet Hotkey</system:String>
+    <system:String x:Key="labelPetSupportTarget">Support Target</system:String>
+    <!-- comboPetSupportTarget Content -->
+    <system:String x:Key="target1">Front Row 1</system:String>
+    <system:String x:Key="target2">Front Row 2</system:String>
+    <system:String x:Key="target3">Front Row 3</system:String>
+    <system:String x:Key="target4">Front Row 4</system:String>
+    <system:String x:Key="target5">Front Row 5</system:String>
+
+    <!-- tabAutoBattle Content -->
+    <system:String x:Key="labelAttackKey">Attack Hotkey</system:String>
+    <!-- tabAutoDefend Content -->
+    <system:String x:Key="labelDefendKey">Defense Hotkey</system:String>
+    <!-- tabAutoEnterBattle Content -->
+    <system:String x:Key="labelEnterBattleKey">Summon Hotkey</system:String>
+    <!-- tabBuffTarget Content -->
+    <system:String x:Key="labelBuffKey">Buff Hotkey</system:String>
+    <system:String x:Key="labelBuffTarget">Buff Target</system:String>
+
+</ResourceDictionary>

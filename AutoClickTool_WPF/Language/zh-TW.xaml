@@ -4,6 +4,11 @@
                     xmlns:local="clr-namespace:AutoClickTool_WPF">
     <!-- Window Content -->
     <system:String x:Key="windowTitle">童話輔助程式</system:String>
+    <!-- Label Version Content -->
+    <system:String x:Key="labelVersion">版本:</system:String>
+    <system:String x:Key="labelVersionNumber">1.0.0</system:String>
+    <!-- Language Content -->
+    <system:String x:Key="labelLanguage">語言:</system:String>
     <!-- Tab Content -->
     <system:String x:Key="tabTestFunction">測試功能</system:String>
     <system:String x:Key="tabAutoBattle">自動打怪</system:String>

@@ -442,6 +442,29 @@ namespace AutoClickTool_WPF
                 }
             }
         }
+
+        private void comboLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // 檢查選項是否被選中
+            if (comboLanguage.SelectedItem != null)
+            {
+                // 根據 ComboBox 的選擇索引執行不同的動作
+                int selectedIndex = comboLanguage.SelectedIndex;
+
+                // 檢查選中的索引並執行對應邏輯
+                switch (selectedIndex)
+                {
+                    case 0: // English
+                        SystemSetting.LoadResourceDictionary("en-US.xaml");
+                        break;
+                    case 1: // 繁體中文
+                        SystemSetting.LoadResourceDictionary("zh-TW.xaml");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
     public class GameScript
     {
@@ -1101,6 +1124,31 @@ namespace AutoClickTool_WPF
             y_friends3 = Coordinate.windowTop[1] + yOffset_friends3;
 
             Coordinate.CalculateAllFriends(x_friends3, y_friends3);
+        }
+
+        // 加載對應的語系資源字典
+        public static void LoadResourceDictionary(string culture)
+        {
+            // 移除舊的資源字典
+            ResourceDictionary oldDict = null;
+            foreach (ResourceDictionary dict in Application.Current.Resources.MergedDictionaries)
+            {
+                if (dict.Source != null && (dict.Source.OriginalString.Contains("en-US.xaml") || dict.Source.OriginalString.Contains("zh-TW.xaml")))
+                {
+                    oldDict = dict;
+                    break;
+                }
+            }
+
+            if (oldDict != null)
+            {
+                Application.Current.Resources.MergedDictionaries.Remove(oldDict);
+            }
+
+            // 加載新的資源字典
+            var newDict = new ResourceDictionary();
+            newDict.Source = new Uri($"/AutoClickTool_WPF;component/Language/{culture}", UriKind.Relative);
+            Application.Current.Resources.MergedDictionaries.Add(newDict);
         }
     }
 }
