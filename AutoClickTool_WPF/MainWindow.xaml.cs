@@ -36,9 +36,11 @@ namespace AutoClickTool_WPF
         {
             base.OnSourceInitialized(e);
 
+            // 此為初始化怪物檢查點 , 務必在視窗打開時優先動作
+            Coordinate.CalculateEnemyCheckXY();
+
             var helper = new WindowInteropHelper(this);
             IntPtr hwnd = helper.Handle;
-
             SystemSetting.RegisterHotKey(hwnd, SystemSetting.HOTKEY_SCRIPT_EN, 0, (uint)KeyInterop.VirtualKeyFromKey(Key.F9));
             HwndSource source = HwndSource.FromHwnd(hwnd);
             source.AddHook(WndProc);
@@ -72,6 +74,47 @@ namespace AutoClickTool_WPF
             SystemSetting.UnregisterHotKey(hwnd, SystemSetting.HOTKEY_SCRIPT_EN);
         }
         #endregion
+
+        private void btnCurrentStatusCheck_Click(object sender, RoutedEventArgs e)
+        {
+            SystemSetting.GetGameWindow();
+            if (GameFunction.BattleCheck_Player(false))
+            {
+                MessageBox.Show($"人物視角\n");
+            }
+            else if (GameFunction.BattleCheck_Pet(false))
+            {
+                MessageBox.Show($"寵物視角\n");
+            }
+            else if (GameFunction.NormalCheck(false))
+            {
+                MessageBox.Show($"非戰鬥視角\n");
+            }
+            else
+            {
+                MessageBox.Show($"例外情況\n");
+            }
+        }
+
+        private void btnGetEnemyIndex_Click(object sender, RoutedEventArgs e)
+        {
+            SystemSetting.GetGameWindow();
+            int index = GameFunction.getEnemyCoor(true);
+            if (index > 0)
+            {
+                MessageBox.Show($"取得怪物序列為第 '{index}' 隻");
+            }
+            else
+            {
+                MessageBox.Show($"無法取得怪物序列");
+            }
+        }
+
+        private void btnGetEnemyIndexBmp_Click(object sender, RoutedEventArgs e)
+        {
+            SystemSetting.GetGameWindow();
+            DebugFunction.captureAllEnemyDotScreen();
+        }
     }
     public class HotKeyAction
     {
@@ -112,7 +155,6 @@ namespace AutoClickTool_WPF
         }
         public static bool BattleCheck_Player(bool IsDebug)
         {
-            SystemSetting.GetGameWindow();
             int x_key, y_key;
             int xOffset_key = Coordinate.windowBoxLineOffset + 766;
             int yOffset_key = Coordinate.windowHOffset + 98;
@@ -137,7 +179,71 @@ namespace AutoClickTool_WPF
             else
                 return false;
         }
+        public static bool BattleCheck_Pet(bool IsDebug)
+        {
+            int x_key, y_key;
+            int xOffset_key = Coordinate.windowBoxLineOffset + 766;
+            int yOffset_key = Coordinate.windowHOffset + 98;
+
+            x_key = Coordinate.windowTop[0] + xOffset_key;
+            y_key = Coordinate.windowTop[1] + yOffset_key;
+
+            Bitmap fight_keybarPetBMP = Properties.Resources.fighting_keybar_pet;
+            // 從畫面上擷取指定區域的圖像
+            Bitmap screenshot_keyBarPet = BitmapFunction.CaptureScreen(x_key, y_key, 33, 34);
+
+            // 比對圖像
+            double Final_KeyBar = BitmapFunction.CompareImages(screenshot_keyBarPet, fight_keybarPetBMP);
+
+            if (IsDebug == true)
+            {
+                MessageBox.Show($"寵物檢測值為 '{Final_KeyBar}')\n");
+            }
+
+            if (Final_KeyBar > 80)
+                return true;
+            else
+                return false;
+        }
+        public static int getEnemyCoor(bool IsDebug)
+        {
+            int result = 0;
+            if (BattleCheck_Player(false) == true || BattleCheck_Pet(false) == true)
+            {
+                int xOffset = Coordinate.windowBoxLineOffset + Coordinate.windowTop[0];
+                int yOffset = Coordinate.windowHOffset + 1 + Coordinate.windowTop[1];
+
+                Bitmap[] enemyGetBmp = new Bitmap[10];
+
+                for (int i = 0; i < 10; i++)
+                    enemyGetBmp[i] = BitmapFunction.CaptureScreen(Coordinate.checkEnemy[i, 0] + xOffset, Coordinate.checkEnemy[i, 1] + yOffset, 1, 1);
+
+                System.Drawing.Color EnemyExistColor = System.Drawing.Color.FromArgb(255, 255, 255);
+
+                for (int i = 0; i < 10; i++)
+                {
+                    double EnemyExistRatio = BitmapFunction.CalculateColorRatio(enemyGetBmp[i], EnemyExistColor);
+                    if (EnemyExistRatio > 0)
+                    {
+                        result = i + 1;
+                        return result;
+                    }
+                    if (IsDebug)
+                        MessageBox.Show($"檢查第'{i}'位置時 , 比對值為'{EnemyExistRatio}'");
+                }
+
+                if (IsDebug)
+                    MessageBox.Show($"無法取得怪物序列");
+
+                return 0;
+            }
+
+            if (IsDebug)
+                MessageBox.Show($"非戰鬥狀態");
+            return 0;
+        }
     }
+
     public class BitmapFunction
     {
         public static double CalculateColorRatio(Bitmap bitmap, System.Drawing.Color targetColor)
@@ -321,7 +427,25 @@ namespace AutoClickTool_WPF
             enemyArray[toIndex, 1] = fromY + yOffset;
         }
     }
+    public class DebugFunction
+    {
+        public static void captureAllEnemyDotScreen()
+        {
+            //if (GameFunction.BattleCheck_Player(false) == true || GameFunction.BattleCheck_Pet(false) == true)
+            {
+                int xOffset = Coordinate.windowBoxLineOffset + Coordinate.windowTop[0];
+                int yOffset = Coordinate.windowHOffset + 1 + Coordinate.windowTop[1];
 
+                Bitmap[] enemyGetBmp = new Bitmap[10];
+
+                for (int i = 0; i < 10; i++)
+                    enemyGetBmp[i] = BitmapFunction.CaptureScreen(Coordinate.checkEnemy[i, 0] + xOffset, Coordinate.checkEnemy[i, 1] + yOffset, 100, 100);
+
+                for (int i = 0; i < 10; i++)
+                    enemyGetBmp[i].Save("Enemy_" + i + "_" + "x" + Coordinate.checkEnemy[i, 0] + xOffset + "_" + "y" + Coordinate.checkEnemy[i, 1] + yOffset + "_" + ".bmp");
+            }
+        }
+    }
     public class SystemSetting
     {
         // 引入 RegisterHotKey API
@@ -388,7 +512,6 @@ namespace AutoClickTool_WPF
                 return false;
             }
         }
-
         public static void GetGameWindow()
         {
             // 抓取視窗位置 & 視窗長寬數值
