@@ -101,16 +101,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\levelup.bmp" />
+    <None Include="Resources\win7_levelup.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\fighting_keybar.bmp" />
+    <None Include="Resources\win7_fighting_keybar.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\fighting_keybar_pet.bmp" />
+    <None Include="Resources\win7_fighting_keybar_pet.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\fighting_keybar_player.bmp" />
+    <None Include="Resources\win7_fighting_keybar_player.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
