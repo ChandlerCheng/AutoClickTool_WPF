@@ -150,7 +150,7 @@ namespace AutoClickTool_WPF
             x_LU = Coordinate.windowTop[0] + xOffset_LU;
             y_LU = Coordinate.windowTop[1] + yOffset_LU;
 
-            Bitmap levelUpBMP = Properties.Resources.levelup;
+            Bitmap levelUpBMP = Properties.Resources.win7_levelup;
 
             // 從畫面上擷取指定區域的圖像
             Bitmap screenshot_LevelUp = BitmapFunction.CaptureScreen(x_LU, y_LU, 50, 43);
@@ -177,7 +177,7 @@ namespace AutoClickTool_WPF
             x_key = Coordinate.windowTop[0] + xOffset_key;
             y_key = Coordinate.windowTop[1] + yOffset_key;
 
-            Bitmap fight_keybarBMP = Properties.Resources.fighting_keybar_player;
+            Bitmap fight_keybarBMP = Properties.Resources.win7_fighting_keybar_player;
             // 從畫面上擷取指定區域的圖像
             Bitmap screenshot_keyBar = BitmapFunction.CaptureScreen(x_key, y_key, 33, 34);
 
@@ -203,7 +203,7 @@ namespace AutoClickTool_WPF
             x_key = Coordinate.windowTop[0] + xOffset_key;
             y_key = Coordinate.windowTop[1] + yOffset_key;
 
-            Bitmap fight_keybarPetBMP = Properties.Resources.fighting_keybar_pet;
+            Bitmap fight_keybarPetBMP = Properties.Resources.win7_fighting_keybar_pet;
             // 從畫面上擷取指定區域的圖像
             Bitmap screenshot_keyBarPet = BitmapFunction.CaptureScreen(x_key, y_key, 33, 34);
 

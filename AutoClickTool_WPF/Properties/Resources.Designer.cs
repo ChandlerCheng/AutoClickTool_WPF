@@ -63,9 +63,9 @@ namespace AutoClickTool_WPF.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        public static System.Drawing.Bitmap fighting_keybar {
+        public static System.Drawing.Bitmap win7_fighting_keybar {
             get {
-                object obj = ResourceManager.GetObject("fighting_keybar", resourceCulture);
+                object obj = ResourceManager.GetObject("win7_fighting_keybar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace AutoClickTool_WPF.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        public static System.Drawing.Bitmap fighting_keybar_pet {
+        public static System.Drawing.Bitmap win7_fighting_keybar_pet {
             get {
-                object obj = ResourceManager.GetObject("fighting_keybar_pet", resourceCulture);
+                object obj = ResourceManager.GetObject("win7_fighting_keybar_pet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace AutoClickTool_WPF.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        public static System.Drawing.Bitmap fighting_keybar_player {
+        public static System.Drawing.Bitmap win7_fighting_keybar_player {
             get {
-                object obj = ResourceManager.GetObject("fighting_keybar_player", resourceCulture);
+                object obj = ResourceManager.GetObject("win7_fighting_keybar_player", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace AutoClickTool_WPF.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        public static System.Drawing.Bitmap levelup {
+        public static System.Drawing.Bitmap win7_levelup {
             get {
-                object obj = ResourceManager.GetObject("levelup", resourceCulture);
+                object obj = ResourceManager.GetObject("win7_levelup", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
