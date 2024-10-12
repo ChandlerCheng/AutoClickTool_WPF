@@ -2,13 +2,38 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:local="clr-namespace:AutoClickTool_WPF">
-        
+    <!-- Window Content -->
+    <system:String x:Key="windowTitle">童話輔助程式</system:String>
     <!-- Tab Content -->
     <system:String x:Key="tabTestFunction">測試功能</system:String>
     <system:String x:Key="tabAutoBattle">自動打怪</system:String>
+    <system:String x:Key="tabAutoDefend">自動防禦</system:String>
+    <system:String x:Key="tabEnterBattleKey">自動召怪</system:String>
+    <system:String x:Key="tabBuffTarget">自動增益</system:String>
     <!-- tabTestFunction Content -->
     <system:String x:Key="btnCurrentStatusCheck">當前狀態檢測</system:String>
     <system:String x:Key="btnGetEnemyIndex">取得怪物次序</system:String>
     <system:String x:Key="btnGetEnemyIndexBmp">取得怪物點圖</system:String>
+        
+    <!-- labelPetSupport Content -->
+    <system:String x:Key="labelPetSupport">寵物輔助</system:String>
+    <system:String x:Key="labelPetSupportKey">寵物熱鍵</system:String>
+    <system:String x:Key="labelPetSupportTarget">輔助目標</system:String>
+    <!-- comboPetSupportTarget Content -->
+    <system:String x:Key="target1">前排1</system:String>
+    <system:String x:Key="target2">前排2</system:String>
+    <system:String x:Key="target3">前排3</system:String>
+    <system:String x:Key="target4">前排4</system:String>
+    <system:String x:Key="target5">前排5</system:String>
+    
+    <!-- tabAutoBattle Content -->
+    <system:String x:Key="labelAttackKey">攻擊熱鍵</system:String>
+    <!-- tabAutoDefend Content -->
+    <system:String x:Key="labelDefendKey">防禦熱鍵</system:String>
+    <!-- tabAutoEnterBattle Content -->
+    <system:String x:Key="labelEnterBattleKey">召怪熱鍵</system:String>
+    <!-- tabBuffTarget Content -->
+    <system:String x:Key="labelBuffKey">增益熱鍵</system:String>
+    <system:String x:Key="labelBuffTarget">增益目標</system:String>
     
 </ResourceDictionary>

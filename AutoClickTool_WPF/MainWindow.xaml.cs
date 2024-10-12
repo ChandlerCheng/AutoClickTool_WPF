@@ -29,9 +29,10 @@ namespace AutoClickTool_WPF
     {
         private static Task actionTask;
         private static bool isEnable = false;
-        private static bool isWindowLoaded = false;
+        private static bool isWindowLoaded = false;        
         private static int tabFunctionSelected = 0;
         private static CancellationTokenSource cancellationTokenSource;
+       
         #region 程式初始化
         public MainWindow()
         {
@@ -45,13 +46,19 @@ namespace AutoClickTool_WPF
             Coordinate.CalculateEnemyCheckXY();
             var helper = new WindowInteropHelper(this);
             IntPtr hwnd = helper.Handle;
+#if !DEBUG 
+            SystemSetting.RegisterHotKey(hwnd, SystemSetting.HOTKEY_SCRIPT_EN, 0, (uint)KeyInterop.VirtualKeyFromKey(Key.F11));
+#else
+            // DEBUG模式下 , 使用F11做熱鍵會干擾編譯時逐步執行
             SystemSetting.RegisterHotKey(hwnd, SystemSetting.HOTKEY_SCRIPT_EN, 0, (uint)KeyInterop.VirtualKeyFromKey(Key.F9));
+#endif
             HwndSource source = HwndSource.FromHwnd(hwnd);
             source.AddHook(WndProc);
             isWindowLoaded = true;
         }
         #endregion
         #region 遊戲中動作
+        
         private static void BattleLoop()
         {
             switch (tabFunctionSelected)
@@ -59,12 +66,21 @@ namespace AutoClickTool_WPF
                 case 2:
                     GameScript.AutoBattle();
                     break;
+                case 3:
+                    GameScript.AutoDefend();
+                    break;
+                case 4:
+                    GameScript.AutoEnterBattle();
+                    break;
+                case 5:
+                    GameScript.AutoBuff();
+                    break;
                 default:
                     break;
             }
         }
-        #endregion
-        #region 執行緒動作
+#endregion
+#region 執行緒動作
         private static async Task ActionLoop(CancellationToken token, MainWindow window)
         {
             while (!token.IsCancellationRequested)
@@ -74,7 +90,7 @@ namespace AutoClickTool_WPF
                     // 更新視窗的 Title
                     window.Dispatcher.Invoke(() =>
                     {
-                        window.Title = $"'{tabFunctionSelected}'啟動中...";
+                        window.Title = $"功能'{tabFunctionSelected}'啟動中...";
                     });
                     isEnable = false;
                 }
@@ -85,7 +101,7 @@ namespace AutoClickTool_WPF
             // 更新視窗的 Title
             window.Dispatcher.Invoke(() =>
             {
-                window.Title = $"已關閉";
+                window.Title = $"已停止";
             });
             isEnable = false;
         }
@@ -126,8 +142,8 @@ namespace AutoClickTool_WPF
                 isEnable = true;
             }
         }
-        #endregion
-        #region 熱鍵觸發事件
+#endregion
+#region 熱鍵觸發事件
         private const int WM_HOTKEY = 0x0312;
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
@@ -143,8 +159,8 @@ namespace AutoClickTool_WPF
             }
             return IntPtr.Zero;
         }
-        #endregion
-        #region 視窗關閉
+#endregion
+#region 視窗關閉
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
@@ -154,8 +170,8 @@ namespace AutoClickTool_WPF
 
             SystemSetting.UnregisterHotKey(hwnd, SystemSetting.HOTKEY_SCRIPT_EN);
         }
-        #endregion
-        #region 測試功能按鈕
+#endregion
+#region 測試功能按鈕
         private void btnCurrentStatusCheck_Click(object sender, RoutedEventArgs e)
         {
             SystemSetting.GetGameWindow();
@@ -197,7 +213,6 @@ namespace AutoClickTool_WPF
             DebugFunction.captureAllEnemyDotScreen();
         }
         #endregion
-
         private void tabControlUsingMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // 檢查視窗是否已完全載入
@@ -219,10 +234,211 @@ namespace AutoClickTool_WPF
                         case "tabAutoBattle":
                             tabFunctionSelected = 2;
                             break;
-                        case "testFunctionTab3":
+                        case "tabAutoDefend":
                             tabFunctionSelected = 3;
                             break;
+                        case "tabAutoEnterBattle":
+                            tabFunctionSelected = 4;
+                            break;
+                        case "tabAutoBuff":
+                            tabFunctionSelected = 5;
+                            break;
+                        default:
+                            tabFunctionSelected = 0;
+                            break;
                     }
+                }
+            }
+        }
+
+        #region 寵物輔助選項
+        private void checkPetSupport_Checked(object sender, RoutedEventArgs e)
+        {
+            GameScript.isPetSupport = true;
+        }
+
+        private void checkPetSupport_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GameScript.isPetSupport = false;
+        }
+#endregion        
+
+        private void tab5comboAutoBuffTarget_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // 檢查選項是否被選中
+            if (tab5comboAutoBuffTarget.SelectedItem != null)
+            {
+                // 根據 ComboBox 的選擇索引執行不同的動作
+                int selectedIndex = tab5comboAutoBuffTarget.SelectedIndex;
+
+                // 檢查選中的索引並執行對應邏輯
+                switch (selectedIndex)
+                {
+                    case 0:
+                        GameScript.buffTarget = 0;
+                        break;
+                    case 1:
+                        GameScript.buffTarget = 1;
+                        break;
+                    case 2:
+                        GameScript.buffTarget = 2;
+                        break;
+                    case 3:
+                        GameScript.buffTarget = 3;
+                        break;
+                    case 4:
+                        GameScript.buffTarget = 4;
+                        break;
+                    case 5:
+                        GameScript.buffTarget = 5;
+                        break;
+                    default:
+                        GameScript.buffTarget = 0;
+                        break;
+                }
+            }
+        }
+
+        private void tab2comboPetSupportTarget_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // 檢查選項是否被選中
+            if (tab2comboPetSupportTarget.SelectedItem != null)
+            {
+                // 根據 ComboBox 的選擇索引執行不同的動作
+                int selectedIndex = tab2comboPetSupportTarget.SelectedIndex;
+
+                // 檢查選中的索引並執行對應邏輯
+                switch (selectedIndex)
+                {
+                    case 0:
+                        GameScript.petSupTarget = 0;
+                        break;
+                    case 1:
+                        GameScript.petSupTarget = 1;
+                        break;
+                    case 2:
+                        GameScript.petSupTarget = 2;
+                        break;
+                    case 3:
+                        GameScript.petSupTarget = 3;
+                        break;
+                    case 4:
+                        GameScript.petSupTarget = 4;
+                        break;
+                    case 5:
+                        GameScript.petSupTarget = 5;
+                        break;
+                    default:
+                        GameScript.petSupTarget = 0;
+                        break;
+                }
+            }
+        }
+
+        private void tab3comboPetSupportTarget_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // 檢查選項是否被選中
+            if (tab3comboPetSupportTarget.SelectedItem != null)
+            {
+                // 根據 ComboBox 的選擇索引執行不同的動作
+                int selectedIndex = tab3comboPetSupportTarget.SelectedIndex;
+
+                // 檢查選中的索引並執行對應邏輯
+                switch (selectedIndex)
+                {
+                    case 0:
+                        GameScript.petSupTarget = 0;
+                        break;
+                    case 1:
+                        GameScript.petSupTarget = 1;
+                        break;
+                    case 2:
+                        GameScript.petSupTarget = 2;
+                        break;
+                    case 3:
+                        GameScript.petSupTarget = 3;
+                        break;
+                    case 4:
+                        GameScript.petSupTarget = 4;
+                        break;
+                    case 5:
+                        GameScript.petSupTarget = 5;
+                        break;
+                    default:
+                        GameScript.petSupTarget = 0;
+                        break;
+                }
+            }
+        }
+
+        private void tab4comboPetSupportTarget_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // 檢查選項是否被選中
+            if (tab4comboPetSupportTarget.SelectedItem != null)
+            {
+                // 根據 ComboBox 的選擇索引執行不同的動作
+                int selectedIndex = tab4comboPetSupportTarget.SelectedIndex;
+
+                // 檢查選中的索引並執行對應邏輯
+                switch (selectedIndex)
+                {
+                    case 0:
+                        GameScript.petSupTarget = 0;
+                        break;
+                    case 1:
+                        GameScript.petSupTarget = 1;
+                        break;
+                    case 2:
+                        GameScript.petSupTarget = 2;
+                        break;
+                    case 3:
+                        GameScript.petSupTarget = 3;
+                        break;
+                    case 4:
+                        GameScript.petSupTarget = 4;
+                        break;
+                    case 5:
+                        GameScript.petSupTarget = 5;
+                        break;
+                    default:
+                        GameScript.petSupTarget = 0;
+                        break;
+                }
+            }
+        }
+
+        private void tab5comboPetSupportTarget_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // 檢查選項是否被選中
+            if (tab5comboPetSupportTarget.SelectedItem != null)
+            {
+                // 根據 ComboBox 的選擇索引執行不同的動作
+                int selectedIndex = tab5comboPetSupportTarget.SelectedIndex;
+
+                // 檢查選中的索引並執行對應邏輯
+                switch (selectedIndex)
+                {
+                    case 0:
+                        GameScript.petSupTarget = 0;
+                        break;
+                    case 1:
+                        GameScript.petSupTarget = 1;
+                        break;
+                    case 2:
+                        GameScript.petSupTarget = 2;
+                        break;
+                    case 3:
+                        GameScript.petSupTarget = 3;
+                        break;
+                    case 4:
+                        GameScript.petSupTarget = 4;
+                        break;
+                    case 5:
+                        GameScript.petSupTarget = 5;
+                        break;
+                    default:
+                        GameScript.petSupTarget = 0;
+                        break;
                 }
             }
         }
@@ -230,6 +446,9 @@ namespace AutoClickTool_WPF
     public class GameScript
     {
         private static int pollingEnemyIndex = 0;
+        public static int petSupTarget = 0;
+        public static int buffTarget = 0;
+        public static bool isPetSupport = false;
         public static void AutoBattle()
         {
             if (GameFunction.BattleCheck_Player(false) == true)
@@ -248,10 +467,79 @@ namespace AutoClickTool_WPF
             }
             else if (GameFunction.BattleCheck_Pet(false) == true)
             {
-                GameFunction.pressDefendButton();
+                if (isPetSupport)
+                {
+                    GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], Key.F5, 10);
+                }
+                else
+                {
+                    GameFunction.pressDefendButton();
+                }
             }
             else
             { 
+            }
+        }
+        public static void AutoDefend()
+        {
+            if (GameFunction.BattleCheck_Player(false) == true)
+            {
+                GameFunction.pressDefendButton();
+            }
+            else if (GameFunction.BattleCheck_Pet(false) == true)
+            {
+                GameFunction.pressDefendButton();
+            }
+            else
+            {
+            }
+        }
+        public static void AutoEnterBattle()
+        {
+            if (GameFunction.BattleCheck_Player(false) == true)
+            {
+                GameFunction.pressDefendButton();
+            }
+            else if (GameFunction.BattleCheck_Pet(false) == true)
+            {
+                if (isPetSupport)
+                {
+                    GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], Key.F5, 10);
+                }
+                else
+                {
+                    GameFunction.pressDefendButton();
+                }
+            }
+            else
+            {
+                // 自動招怪
+                if (GameFunction.NormalCheck(false) == true)
+                {
+                    KeyboardSimulator.KeyPress(Key.F5);
+                    Thread.Sleep(50);
+                }
+            }
+        }
+        public static void AutoBuff()
+        {
+            if (GameFunction.BattleCheck_Player(false) == true)
+            {
+                GameFunction.castSpellOnTarget(Coordinate.Friends[buffTarget, 0], Coordinate.Friends[buffTarget, 1], Key.F5, 10);
+            }
+            else if (GameFunction.BattleCheck_Pet(false) == true)
+            {
+                if (isPetSupport)
+                {
+                    GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], Key.F5, 10);
+                }
+                else
+                {
+                    GameFunction.pressDefendButton();
+                }
+            }
+            else
+            {
             }
         }
     }

@@ -112,5 +112,8 @@
   <ItemGroup>
     <None Include="Resources\win7_fighting_keybar_player.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\favicon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
