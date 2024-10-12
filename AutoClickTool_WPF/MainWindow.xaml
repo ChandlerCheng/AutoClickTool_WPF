@@ -8,13 +8,13 @@
         Title="MainWindow" Height="300" Width="300">
     <Grid>
         <TabControl>
-            <TabItem Name="testFunctionTab" Header="測試功能">
+            <TabItem Name="testFunctionTab" Header="{DynamicResource tabTestFunction}">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Vertical" Width="80">
-                            <Button Name="btnCurrentStatusCheck" Height="40" Click="btnCurrentStatusCheck_Click">當前狀態檢測</Button>
-                            <Button Name="btnGetEnemyIndex" Height="40" Click="btnGetEnemyIndex_Click">取得怪物次序</Button>
-                            <Button Name="btnGetEnemyIndexBmp" Height="40" Click="btnGetEnemyIndexBmp_Click">取得怪物點圖</Button>
+                            <Button Name="btnCurrentStatusCheck" Height="40" Click="btnCurrentStatusCheck_Click" Content="{DynamicResource btnCurrentStatusCheck}"></Button>
+                            <Button Name="btnGetEnemyIndex" Height="40" Click="btnGetEnemyIndex_Click" Content="{DynamicResource btnGetEnemyIndex}"></Button>
+                            <Button Name="btnGetEnemyIndexBmp" Height="40" Click="btnGetEnemyIndexBmp_Click" Content="{DynamicResource btnGetEnemyIndexBmp}"></Button>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

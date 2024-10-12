@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:WpfApp1">
+        
+    <!-- Tab Content -->
+    <system:String x:Key="tabTestFunction">測試功能</system:String>
+    <!-- TestFunction Content -->
+    <system:String x:Key="btnCurrentStatusCheck">當前狀態檢測</system:String>
+    <system:String x:Key="btnGetEnemyIndex">取得怪物次序</system:String>
+    <system:String x:Key="btnGetEnemyIndexBmp">取得怪物點圖</system:String>
+    
+</ResourceDictionary>
