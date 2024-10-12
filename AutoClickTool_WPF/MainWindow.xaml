@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoClickTool_WPF"
         mc:Ignorable="d"
+        Name="mainApp"
         Title="MainWindow" Height="300" Width="300">
     <Grid>
-        <TabControl>
-            <TabItem Name="testFunctionTab" Header="{DynamicResource tabTestFunction}">
+        <TabControl Name="tabControlUsingMethod">
+            <TabItem Name="testFunctionTab" Header="{DynamicResource tabTestFunction}" >
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Vertical" Width="80">
@@ -18,7 +19,10 @@
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
-            </TabItem>            
+            </TabItem>
+            <TabItem Name="Tab2">
+                
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

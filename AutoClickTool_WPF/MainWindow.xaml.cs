@@ -27,6 +27,10 @@ namespace AutoClickTool_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static Task actionTask;
+        private static bool isEnable = false;
+        private static CancellationTokenSource cancellationTokenSource;
+        #region 程式初始化
         public MainWindow()
         {
             InitializeComponent();
@@ -35,17 +39,86 @@ namespace AutoClickTool_WPF
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-
             // 此為初始化怪物檢查點 , 務必在視窗打開時優先動作
             Coordinate.CalculateEnemyCheckXY();
-
             var helper = new WindowInteropHelper(this);
             IntPtr hwnd = helper.Handle;
             SystemSetting.RegisterHotKey(hwnd, SystemSetting.HOTKEY_SCRIPT_EN, 0, (uint)KeyInterop.VirtualKeyFromKey(Key.F9));
             HwndSource source = HwndSource.FromHwnd(hwnd);
             source.AddHook(WndProc);
+            isWindowLoaded = true;
         }
+        #endregion
+        #region 遊戲中動作
+        private static void BattleLoop()
+        {
+            if (GameFunction.BattleCheck_Player(false) == true)
+            {
 
+            }
+        }
+        #endregion
+        #region 執行緒動作
+        private static async Task ActionLoop(CancellationToken token, MainWindow window)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                if (isEnable)
+                {
+                    // 更新視窗的 Title
+                    window.Dispatcher.Invoke(() =>
+                    {
+                        window.Title = $"啟動中...";
+                    });
+                    isEnable = false;
+                }
+                // 執行你的動作邏輯
+                await Task.Delay(100);  // 模擬一些延遲，避免CPU過度佔用
+                BattleLoop();
+            }
+            // 更新視窗的 Title
+            window.Dispatcher.Invoke(() =>
+            {
+                window.Title = $"已關閉";
+            });
+            isEnable = false;
+        }
+        public static async void HotKeyAction_Script_EnableSwitch(MainWindow window)
+        {
+            SystemSetting.GetGameWindow();
+            if (Coordinate.IsGetWindows != true)
+            {
+                MessageBox.Show($"遊戲尚未啟動或發生錯誤");
+            }
+
+            // 檢查是否已經有一個執行中的任務
+            if (actionTask != null && !actionTask.IsCompleted)
+            {
+                cancellationTokenSource.Cancel();  // 發送取消請求
+                try
+                {
+                    await actionTask;  // 等待任務結束
+                }
+                catch (OperationCanceledException)
+                {
+                    // 任務被取消的情況
+                }
+                finally
+                {
+                    cancellationTokenSource.Dispose();  // 清理
+                }
+                return;
+            }
+
+            // 檢查是否需要重新啟動
+            if (actionTask == null || actionTask.IsCompleted)
+            {
+                cancellationTokenSource = new CancellationTokenSource();
+                actionTask = Task.Run(() => ActionLoop(cancellationTokenSource.Token, window));
+                isEnable = true;
+            }
+        }
+        #endregion
         #region 熱鍵觸發事件
         private const int WM_HOTKEY = 0x0312;
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -56,7 +129,7 @@ namespace AutoClickTool_WPF
                 if (wParam.ToInt32() == SystemSetting.HOTKEY_SCRIPT_EN)
                 {
                     // F11 熱鍵觸發，執行相應的動作
-                    HotKeyAction.HotKeyAction_Script_EnableSwitch();
+                    HotKeyAction_Script_EnableSwitch(this);
                     handled = true;
                 }
             }
@@ -74,7 +147,7 @@ namespace AutoClickTool_WPF
             SystemSetting.UnregisterHotKey(hwnd, SystemSetting.HOTKEY_SCRIPT_EN);
         }
         #endregion
-
+        #region 測試功能按鈕
         private void btnCurrentStatusCheck_Click(object sender, RoutedEventArgs e)
         {
             SystemSetting.GetGameWindow();
@@ -115,18 +188,7 @@ namespace AutoClickTool_WPF
             SystemSetting.GetGameWindow();
             DebugFunction.captureAllEnemyDotScreen();
         }
-    }
-    public class HotKeyAction
-    {
-        public static void HotKeyAction_Script_EnableSwitch()
-        {
-            SystemSetting.GetGameWindow();
-            int i = GameFunction.getEnemyCoor(false);
-            if (i > 0)
-            {
-                GameFunction.castSpellOnTarget(Coordinate.Enemy[i - 1, 0], Coordinate.Enemy[i - 1, 1], Key.F5, 50);
-            }
-        }
+        #endregion
     }
 
     public class GameFunction
