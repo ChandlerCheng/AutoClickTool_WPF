@@ -4,6 +4,13 @@
                     xmlns:local="clr-namespace:AutoClickTool_WPF">
     <!-- Window Content -->
     <system:String x:Key="windowTitle">童話輔助程式</system:String>
+    <!-- Window Active Title Content -->
+    <system:String x:Key="windowTitleRuning">啟用中</system:String>
+    <system:String x:Key="windowTitleSuspending">已停止</system:String>
+
+    <system:String x:Key="windowTitleNoFunction">無功能</system:String>
+    <system:String x:Key="windowTitleFunction">功能</system:String>
+    <system:String x:Key="windowTitleIs">正在</system:String>
     <!-- Label Version Content -->
     <system:String x:Key="labelVersion">版本:</system:String>
     <system:String x:Key="labelVersionNumber">1.0.0</system:String>

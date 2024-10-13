@@ -29,16 +29,15 @@ namespace AutoClickTool_WPF
     {
         private static Task actionTask;
         private static bool isEnable = false;
-        private static bool isWindowLoaded = false;        
+        private static bool isWindowLoaded = false;
         private static int tabFunctionSelected = 0;
         private static CancellationTokenSource cancellationTokenSource;
-       
+
         #region 程式初始化
         public MainWindow()
         {
             InitializeComponent();
         }
-
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
@@ -58,9 +57,10 @@ namespace AutoClickTool_WPF
         }
         #endregion
         #region 遊戲中動作
-        
+
         private static void BattleLoop()
         {
+#if !DEBUG
             switch (tabFunctionSelected)
             {
                 case 2:
@@ -78,9 +78,12 @@ namespace AutoClickTool_WPF
                 default:
                     break;
             }
+#else
+
+#endif
         }
-#endregion
-#region 執行緒動作
+        #endregion
+        #region 執行緒動作
         private static async Task ActionLoop(CancellationToken token, MainWindow window)
         {
             while (!token.IsCancellationRequested)
@@ -90,7 +93,17 @@ namespace AutoClickTool_WPF
                     // 更新視窗的 Title
                     window.Dispatcher.Invoke(() =>
                     {
-                        window.Title = $"功能'{tabFunctionSelected}'啟動中...";
+                        if (Application.Current.Resources.Contains("windowTitleFunction") && Application.Current.Resources.Contains("windowTitleRuning")&& Application.Current.Resources.Contains("windowTitleIs"))
+                        {
+                            // 單純想讓Title可以隨語系改變好看用
+                            window.Title = Application.Current.Resources["windowTitleFunction"].ToString() +" '" +tabFunctionSelected +
+                            "'"+" "+Application.Current.Resources["windowTitleIs"].ToString() +" "+ 
+                            Application.Current.Resources["windowTitleRuning"].ToString();
+                        }
+                        else
+                        {
+                            window.Title = $"功能'{tabFunctionSelected}'啟動中...";
+                        }
                     });
                     isEnable = false;
                 }
@@ -101,7 +114,8 @@ namespace AutoClickTool_WPF
             // 更新視窗的 Title
             window.Dispatcher.Invoke(() =>
             {
-                window.Title = $"已停止";
+                if (Application.Current.Resources.Contains("windowTitleSuspending"))
+                    window.Title = Application.Current.Resources["windowTitleSuspending"].ToString();
             });
             isEnable = false;
         }
@@ -142,8 +156,8 @@ namespace AutoClickTool_WPF
                 isEnable = true;
             }
         }
-#endregion
-#region 熱鍵觸發事件
+        #endregion
+        #region 熱鍵觸發事件
         private const int WM_HOTKEY = 0x0312;
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
@@ -159,8 +173,8 @@ namespace AutoClickTool_WPF
             }
             return IntPtr.Zero;
         }
-#endregion
-#region 視窗關閉
+        #endregion
+        #region 視窗關閉
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
@@ -170,8 +184,8 @@ namespace AutoClickTool_WPF
 
             SystemSetting.UnregisterHotKey(hwnd, SystemSetting.HOTKEY_SCRIPT_EN);
         }
-#endregion
-#region 測試功能按鈕
+        #endregion
+        #region 測試功能按鈕
         private void btnCurrentStatusCheck_Click(object sender, RoutedEventArgs e)
         {
             SystemSetting.GetGameWindow();
@@ -261,7 +275,7 @@ namespace AutoClickTool_WPF
         {
             GameScript.isPetSupport = false;
         }
-#endregion        
+
 
         private void tab5comboAutoBuffTarget_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -442,7 +456,8 @@ namespace AutoClickTool_WPF
                 }
             }
         }
-
+        #endregion
+        #region 程式語系變更
         private void comboLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // 檢查選項是否被選中
@@ -465,6 +480,7 @@ namespace AutoClickTool_WPF
                 }
             }
         }
+        #endregion
     }
     public class GameScript
     {
@@ -500,7 +516,7 @@ namespace AutoClickTool_WPF
                 }
             }
             else
-            { 
+            {
             }
         }
         public static void AutoDefend()
@@ -657,7 +673,6 @@ namespace AutoClickTool_WPF
             else
                 return false;
         }
-
         public static void pressDefendButton()
         {
             /*
