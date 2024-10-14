@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
@@ -230,7 +231,13 @@ namespace AutoClickTool_WPF
         private void btnGetTargetBmp_Click(object sender, RoutedEventArgs e)
         {
             SystemSetting.GetGameWindow();
-            // 暫定寫一個截圖工具
+            if (int.TryParse(this.textGetTargetBmpX.Text,out int x)&&
+                int.TryParse(this.textGetTargetBmpY.Text, out int y)&&
+                int.TryParse(this.textGetTargetBmpWidth.Text, out int width)&&
+                int.TryParse(this.textGetTargetBmpHeight.Text, out int height))
+            {
+                DebugFunction.captureTargetScreen(x,y,width,height);
+            }
         }
         #endregion
         #region 選擇TAB時設定使用的腳本
@@ -487,7 +494,16 @@ namespace AutoClickTool_WPF
                 }
             }
         }
+
         #endregion
+
+        private void textGetTargetBmp_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputMethod.SetIsInputMethodEnabled((TextBox)sender, false);
+
+            Regex regex = new Regex("[^0-9]+"); // 非數字的正則表達式
+            e.Handled = regex.IsMatch(e.Text);  // 如果輸入非數字，則處理輸入事件為無效
+        }
     }
     public class GameScript
     {
@@ -929,13 +945,27 @@ namespace AutoClickTool_WPF
                 int yOffset = Coordinate.windowHOffset + 1 + Coordinate.windowTop[1];
 
                 Bitmap[] enemyGetBmp = new Bitmap[10];
+                int x, y;
 
                 for (int i = 0; i < 10; i++)
+                {
                     enemyGetBmp[i] = BitmapFunction.CaptureScreen(Coordinate.checkEnemy[i, 0] + xOffset, Coordinate.checkEnemy[i, 1] + yOffset, 100, 100);
-
-                for (int i = 0; i < 10; i++)
-                    enemyGetBmp[i].Save("Enemy_" + i + "_" + "x" + Coordinate.checkEnemy[i, 0] + xOffset + "_" + "y" + Coordinate.checkEnemy[i, 1] + yOffset + "_" + ".bmp");
+                    x = Coordinate.checkEnemy[i, 0] + xOffset;
+                    y = Coordinate.checkEnemy[i, 1] + yOffset;
+                    enemyGetBmp[i].Save("Enemy_" + i + "_" + "x" + x + "_" + "y" + y + "_" + ".bmp");
+                }
             }
+        }
+        public static void captureTargetScreen(int in_x, int in_y, int width, int height)
+        {
+            int xOffset = Coordinate.windowBoxLineOffset + Coordinate.windowTop[0];
+            int yOffset = Coordinate.windowHOffset + 1 + Coordinate.windowTop[1];
+            int x, y;
+            x = xOffset + in_x;
+            y = yOffset + in_y;
+            Bitmap GetBmp;
+            GetBmp = BitmapFunction.CaptureScreen(x,y , width, height); 
+            GetBmp.Save("Bitmap_"+ "_" + "x" + x + "_" + "y" + y + "_" + ".bmp");
         }
     }
     public class MouseSimulator
