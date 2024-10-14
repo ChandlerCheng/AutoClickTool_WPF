@@ -226,7 +226,14 @@ namespace AutoClickTool_WPF
             SystemSetting.GetGameWindow();
             DebugFunction.captureAllEnemyDotScreen();
         }
+
+        private void btnGetTargetBmp_Click(object sender, RoutedEventArgs e)
+        {
+            SystemSetting.GetGameWindow();
+            // 暫定寫一個截圖工具
+        }
         #endregion
+        #region 選擇TAB時設定使用的腳本
         private void tabControlUsingMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // 檢查視窗是否已完全載入
@@ -258,13 +265,13 @@ namespace AutoClickTool_WPF
                             tabFunctionSelected = 5;
                             break;
                         default:
-                            tabFunctionSelected = 0;
+                            tabFunctionSelected = 1;
                             break;
                     }
                 }
             }
         }
-
+        #endregion
         #region 寵物輔助選項
         private void checkPetSupport_Checked(object sender, RoutedEventArgs e)
         {
@@ -488,6 +495,8 @@ namespace AutoClickTool_WPF
         public static int petSupTarget = 0;
         public static int buffTarget = 0;
         public static bool isPetSupport = false;
+        public static Key playerActionKey = Key.F5;
+        public static Key petActionKey = Key.F5;
         public static void AutoBattle()
         {
             if (GameFunction.BattleCheck_Player(false) == true)
@@ -495,10 +504,10 @@ namespace AutoClickTool_WPF
                 int i = GameFunction.getEnemyCoor(false);
                 if (i > 0)
                 {
-                    GameFunction.castSpellOnTarget(Coordinate.Enemy[i - 1, 0], Coordinate.Enemy[i - 1, 1], Key.F5, 10);
+                    GameFunction.castSpellOnTarget(Coordinate.Enemy[i - 1, 0], Coordinate.Enemy[i - 1, 1], playerActionKey, 10);
                     return;
                 }
-                GameFunction.castSpellOnTarget(Coordinate.Enemy[pollingEnemyIndex, 0], Coordinate.Enemy[pollingEnemyIndex, 1], Key.F5, 10);
+                GameFunction.castSpellOnTarget(Coordinate.Enemy[pollingEnemyIndex, 0], Coordinate.Enemy[pollingEnemyIndex, 1], playerActionKey, 10);
                 /* 若無法正常取得怪物座標 , 則直接朝所有怪物位置循環點擊 , 最差頂多讀條一半 */
                 pollingEnemyIndex++;
                 if (pollingEnemyIndex > 9)
@@ -508,7 +517,7 @@ namespace AutoClickTool_WPF
             {
                 if (isPetSupport)
                 {
-                    GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], Key.F5, 10);
+                    GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], petActionKey, 10);
                 }
                 else
                 {
@@ -543,7 +552,7 @@ namespace AutoClickTool_WPF
             {
                 if (isPetSupport)
                 {
-                    GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], Key.F5, 10);
+                    GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], petActionKey, 10);
                 }
                 else
                 {
@@ -564,13 +573,13 @@ namespace AutoClickTool_WPF
         {
             if (GameFunction.BattleCheck_Player(false) == true)
             {
-                GameFunction.castSpellOnTarget(Coordinate.Friends[buffTarget, 0], Coordinate.Friends[buffTarget, 1], Key.F5, 10);
+                GameFunction.castSpellOnTarget(Coordinate.Friends[buffTarget, 0], Coordinate.Friends[buffTarget, 1], playerActionKey, 10);
             }
             else if (GameFunction.BattleCheck_Pet(false) == true)
             {
                 if (isPetSupport)
                 {
-                    GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], Key.F5, 10);
+                    GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], petActionKey, 10);
                 }
                 else
                 {

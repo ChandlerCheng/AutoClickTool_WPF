@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:AutoClickTool_WPF"
         mc:Ignorable="d"
         Name="mainApp"
-        Title="{DynamicResource windowTitle}" Height="300" Width="300">
-    
+        Title="{DynamicResource windowTitle}" Height="300" Width="350">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -15,20 +15,45 @@
             <RowDefinition Height="Auto" />
             <!-- 底部的 StackPanel -->
         </Grid.RowDefinitions>
-        
+
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
                 <Label Content="{DynamicResource labelVersion}"></Label>
                 <Label Content="{DynamicResource labelVersionNumber}"></Label>
             </StackPanel>
-            <TabControl Name="tabControlUsingMethod" SelectionChanged ="tabControlUsingMethod_SelectionChanged" TabStripPlacement="Top">
+            <TabControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="4"  Margin="2.5,5,5,1"  Name="tabControlUsingMethod" SelectionChanged ="tabControlUsingMethod_SelectionChanged" TabStripPlacement="Top">
                 <TabItem Name="tabTestFunction" Header="{DynamicResource tabTestFunction}" >
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <StackPanel Orientation="Vertical" Width="200">
-                                <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnCurrentStatusCheck" Height="40" Click="btnCurrentStatusCheck_Click" Content="{DynamicResource btnCurrentStatusCheck}"></Button>
-                                <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetEnemyIndex" Height="40" Click="btnGetEnemyIndex_Click" Content="{DynamicResource btnGetEnemyIndex}"></Button>
-                                <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetEnemyIndexBmp" Height="40" Click="btnGetEnemyIndexBmp_Click" Content="{DynamicResource btnGetEnemyIndexBmp}"></Button>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnCurrentStatusCheck" Height="40" Click="btnCurrentStatusCheck_Click" Content="{DynamicResource btnCurrentStatusCheck}"></Button>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetEnemyIndex" Height="40" Click="btnGetEnemyIndex_Click" Content="{DynamicResource btnGetEnemyIndex}"></Button>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetEnemyIndexBmp" Height="40" Click="btnGetEnemyIndexBmp_Click" Content="{DynamicResource btnGetEnemyIndexBmp}"></Button>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetTargetBmp"  Height="40" Click="btnGetTargetBmp_Click" Content="{DynamicResource btnGetTargetBmp}"></Button>
+                                    <StackPanel Orientation="Vertical">
+                                        <Label Content="{DynamicResource labelGetTargetX}"></Label>
+                                        <TextBox Width="40" Name="textGetTargetBmpX"></TextBox>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical">
+                                        <Label Content="{DynamicResource labelGetTargetY}"></Label>
+                                        <TextBox Width="40" Name="textGetTargetBmpY"></TextBox>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical">
+                                        <Label Content="{DynamicResource labelGetTargetWidth}"></Label>
+                                        <TextBox Width="40" Name="textGetTargetBmpWidth"></TextBox>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical">
+                                        <Label Content="{DynamicResource labelGetTargetHeight}"></Label>
+                                        <TextBox Width="40" Name="textGetTargetBmpHeight"></TextBox>
+                                    </StackPanel>
+                                </StackPanel>    
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -65,7 +90,7 @@
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="{DynamicResource labelAttackKey}"></Label>
+                                <Label Content="{DynamicResource labelDefendKey}"></Label>
                                 <Label Content="F5"></Label>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
@@ -157,7 +182,7 @@
                 </TabItem>
             </TabControl>
         </StackPanel>
-        
+
         <StackPanel Orientation="Horizontal"  Grid.Row="1">
             <Label Content="{DynamicResource labelLanguage}"></Label>
             <ComboBox Name="comboLanguage" SelectionChanged="comboLanguage_SelectionChanged">

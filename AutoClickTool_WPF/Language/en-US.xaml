@@ -3,7 +3,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:local="clr-namespace:AutoClickTool_WPF">
     <!-- Window Content -->
-    <system:String x:Key="windowTitle">Fairy Tale Assistant</system:String>
+    <system:String x:Key="windowTitle">FairyTale Assistant</system:String>
     <!-- Window Active Title Content -->
     <system:String x:Key="windowTitleRuning">Runing</system:String>
     <system:String x:Key="windowTitleSuspending">Suspending</system:String>
@@ -26,7 +26,12 @@
     <system:String x:Key="btnCurrentStatusCheck">Check Current Status</system:String>
     <system:String x:Key="btnGetEnemyIndex">Get Enemy Order</system:String>
     <system:String x:Key="btnGetEnemyIndexBmp">Get Enemy Point Bitmap</system:String>
-
+    <system:String x:Key="btnGetTargetBmp">Get Target Bitmap</system:String>
+    <!-- TestFunction GetTargetBmp  Content -->
+    <system:String x:Key="labelGetTargetX">X</system:String>
+    <system:String x:Key="labelGetTargetY">Y</system:String>
+    <system:String x:Key="labelGetTargetWidth">Width</system:String>
+    <system:String x:Key="labelGetTargetHeight">Height</system:String>
     <!-- labelPetSupport Content -->
     <system:String x:Key="labelPetSupport">Pet Support</system:String>
     <system:String x:Key="labelPetSupportKey">Pet Hotkey</system:String>

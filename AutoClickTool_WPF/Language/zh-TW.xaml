@@ -26,7 +26,12 @@
     <system:String x:Key="btnCurrentStatusCheck">當前狀態檢測</system:String>
     <system:String x:Key="btnGetEnemyIndex">取得怪物次序</system:String>
     <system:String x:Key="btnGetEnemyIndexBmp">取得怪物點圖</system:String>
-        
+    <system:String x:Key="btnGetTargetBmp">取得座標圖檔</system:String>
+    <!-- TestFunction GetTargetBmp  Content -->
+    <system:String x:Key="labelGetTargetX">X</system:String>
+    <system:String x:Key="labelGetTargetY">Y</system:String>
+    <system:String x:Key="labelGetTargetWidth">寬度</system:String>
+    <system:String x:Key="labelGetTargetHeight">高度</system:String>
     <!-- labelPetSupport Content -->
     <system:String x:Key="labelPetSupport">寵物輔助</system:String>
     <system:String x:Key="labelPetSupportKey">寵物熱鍵</system:String>
