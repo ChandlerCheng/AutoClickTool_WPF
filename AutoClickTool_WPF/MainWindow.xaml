@@ -74,19 +74,35 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelAttackKey}"></Label>
-                                <Label Content="F5"></Label>
+                                <ComboBox Name="tab2ComboPlayerActionKey" SelectedIndex="0">
+                                    <ComboBoxItem>F5</ComboBoxItem>
+                                    <ComboBoxItem>F6</ComboBoxItem>
+                                    <ComboBoxItem>F7</ComboBoxItem>
+                                    <ComboBoxItem>F8</ComboBoxItem>
+                                    <ComboBoxItem>F9</ComboBoxItem>
+                                    <ComboBoxItem>F10</ComboBoxItem>
+                                    <ComboBoxItem>F12</ComboBoxItem>
+                                </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelPetSupport}"></Label>
-                                <CheckBox Name="tab2CheckPetSupport" Checked="checkPetSupport_Checked" Unchecked="checkPetSupport_Unchecked"></CheckBox>
+                                <CheckBox Name="tab2CheckPetSupport" ></CheckBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
                                 <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
-                                <Label Content="F5"></Label>
+                                <ComboBox Name="tab2ComboPetActionKey" SelectedIndex="0">
+                                    <ComboBoxItem>F5</ComboBoxItem>
+                                    <ComboBoxItem>F6</ComboBoxItem>
+                                    <ComboBoxItem>F7</ComboBoxItem>
+                                    <ComboBoxItem>F8</ComboBoxItem>
+                                    <ComboBoxItem>F9</ComboBoxItem>
+                                    <ComboBoxItem>F10</ComboBoxItem>
+                                    <ComboBoxItem>F12</ComboBoxItem>
+                                </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
-                                <ComboBox Name="tab2comboPetSupportTarget" SelectionChanged ="tab2comboPetSupportTarget_SelectionChanged" SelectedIndex="0">
+                                <ComboBox Name="tab2comboPetSupportTarget" SelectedIndex="0">
                                     <ComboBoxItem Content="{DynamicResource target1}" />
                                     <ComboBoxItem Content="{DynamicResource target2}" />
                                     <ComboBoxItem Content="{DynamicResource target3}" />
@@ -99,22 +115,26 @@
                 </TabItem>
                 <TabItem Name="tabAutoDefend" Header="{DynamicResource tabAutoDefend}">
                     <StackPanel Orientation="Horizontal">
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="{DynamicResource labelDefendKey}"></Label>
-                                <Label Content="F5"></Label>
-                            </StackPanel>
+                        <StackPanel Orientation="Vertical">                            
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelPetSupport}"></Label>
-                                <CheckBox Name="tab3CheckPetSupport" Checked="checkPetSupport_Checked" Unchecked="checkPetSupport_Unchecked"></CheckBox>
+                                <CheckBox Name="tab3CheckPetSupport" ></CheckBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
                                 <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
-                                <Label Content="F5"></Label>
+                                <ComboBox Name="tab3ComboPetActionKey" SelectedIndex="0">
+                                    <ComboBoxItem>F5</ComboBoxItem>
+                                    <ComboBoxItem>F6</ComboBoxItem>
+                                    <ComboBoxItem>F7</ComboBoxItem>
+                                    <ComboBoxItem>F8</ComboBoxItem>
+                                    <ComboBoxItem>F9</ComboBoxItem>
+                                    <ComboBoxItem>F10</ComboBoxItem>
+                                    <ComboBoxItem>F12</ComboBoxItem>
+                                </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
-                                <ComboBox Name="tab3comboPetSupportTarget" SelectionChanged ="tab3comboPetSupportTarget_SelectionChanged" SelectedIndex="0">
+                                <ComboBox Name="tab3comboPetSupportTarget" SelectedIndex="0">
                                     <ComboBoxItem Content="{DynamicResource target1}" />
                                     <ComboBoxItem Content="{DynamicResource target2}" />
                                     <ComboBoxItem Content="{DynamicResource target3}" />
@@ -130,19 +150,35 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelEnterBattleKey}"></Label>
-                                <Label Content="F5"></Label>
+                                <ComboBox Name="tab2ComboSummonerActionKey" SelectedIndex="0">
+                                    <ComboBoxItem>F5</ComboBoxItem>
+                                    <ComboBoxItem>F6</ComboBoxItem>
+                                    <ComboBoxItem>F7</ComboBoxItem>
+                                    <ComboBoxItem>F8</ComboBoxItem>
+                                    <ComboBoxItem>F9</ComboBoxItem>
+                                    <ComboBoxItem>F10</ComboBoxItem>
+                                    <ComboBoxItem>F12</ComboBoxItem>
+                                </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelPetSupport}"></Label>
-                                <CheckBox Name="tab4CheckPetSupport" Checked="checkPetSupport_Checked" Unchecked="checkPetSupport_Unchecked"></CheckBox>
+                                <CheckBox Name="tab4CheckPetSupport"  ></CheckBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
                                 <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
-                                <Label Content="F5"></Label>
+                                <ComboBox Name="tab4ComboPetActionKey" SelectedIndex="0">
+                                    <ComboBoxItem>F5</ComboBoxItem>
+                                    <ComboBoxItem>F6</ComboBoxItem>
+                                    <ComboBoxItem>F7</ComboBoxItem>
+                                    <ComboBoxItem>F8</ComboBoxItem>
+                                    <ComboBoxItem>F9</ComboBoxItem>
+                                    <ComboBoxItem>F10</ComboBoxItem>
+                                    <ComboBoxItem>F12</ComboBoxItem>
+                                </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
-                                <ComboBox Name="tab4comboPetSupportTarget" SelectionChanged ="tab4comboPetSupportTarget_SelectionChanged" SelectedIndex="0">
+                                <ComboBox Name="tab4comboPetSupportTarget" SelectedIndex="0">
                                     <ComboBoxItem Content="{DynamicResource target1}" />
                                     <ComboBoxItem Content="{DynamicResource target2}" />
                                     <ComboBoxItem Content="{DynamicResource target3}" />
@@ -158,11 +194,19 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelBuffKey}"></Label>
-                                <Label Content="F5"></Label>
+                                <ComboBox Name="tab5ComboAutoBuffKey" SelectedIndex="0">
+                                    <ComboBoxItem>F5</ComboBoxItem>
+                                    <ComboBoxItem>F6</ComboBoxItem>
+                                    <ComboBoxItem>F7</ComboBoxItem>
+                                    <ComboBoxItem>F8</ComboBoxItem>
+                                    <ComboBoxItem>F9</ComboBoxItem>
+                                    <ComboBoxItem>F10</ComboBoxItem>
+                                    <ComboBoxItem>F12</ComboBoxItem>
+                                </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelBuffTarget}"></Label>
-                                <ComboBox Name="tab5comboAutoBuffTarget" SelectionChanged ="tab5comboAutoBuffTarget_SelectionChanged" SelectedIndex="0">
+                                <ComboBox Name="tab5comboAutoBuffTarget" SelectedIndex="0">
                                     <ComboBoxItem Content="{DynamicResource target1}" />
                                     <ComboBoxItem Content="{DynamicResource target2}" />
                                     <ComboBoxItem Content="{DynamicResource target3}" />
@@ -172,15 +216,23 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelPetSupport}"></Label>
-                                <CheckBox Name="tab5CheckPetSupport" Checked="checkPetSupport_Checked" Unchecked="checkPetSupport_Unchecked"></CheckBox>
+                                <CheckBox Name="tab5CheckPetSupport" ></CheckBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
                                 <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
-                                <Label Content="F5"></Label>
+                                <ComboBox Name="tab5ComboPetActionKey" SelectedIndex="0">
+                                    <ComboBoxItem>F5</ComboBoxItem>
+                                    <ComboBoxItem>F6</ComboBoxItem>
+                                    <ComboBoxItem>F7</ComboBoxItem>
+                                    <ComboBoxItem>F8</ComboBoxItem>
+                                    <ComboBoxItem>F9</ComboBoxItem>
+                                    <ComboBoxItem>F10</ComboBoxItem>
+                                    <ComboBoxItem>F12</ComboBoxItem>
+                                </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
-                                <ComboBox Name="tab5comboPetSupportTarget" SelectionChanged ="tab5comboPetSupportTarget_SelectionChanged" SelectedIndex="0">
+                                <ComboBox Name="tab5comboPetSupportTarget" SelectedIndex="0">
                                     <ComboBoxItem Content="{DynamicResource target1}" />
                                     <ComboBoxItem Content="{DynamicResource target2}" />
                                     <ComboBoxItem Content="{DynamicResource target3}" />
