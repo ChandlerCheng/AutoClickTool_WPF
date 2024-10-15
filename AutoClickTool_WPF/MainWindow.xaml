@@ -23,40 +23,51 @@
             </StackPanel>
             <TabControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="4"  Margin="2.5,5,5,1"  Name="tabControlUsingMethod" SelectionChanged ="tabControlUsingMethod_SelectionChanged" TabStripPlacement="Top">
                 <TabItem Name="tabTestFunction" Header="{DynamicResource tabTestFunction}" >
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Orientation="Vertical">
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnCurrentStatusCheck" Height="40" Click="btnCurrentStatusCheck_Click" Content="{DynamicResource btnCurrentStatusCheck}"></Button>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="200">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnCurrentStatusCheck" Height="40" Click="btnCurrentStatusCheck_Click" Content="{DynamicResource btnCurrentStatusCheck}"></Button>
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel Orientation="Vertical">
+                                                <Label Content="{DynamicResource checkEnableDebugMsg}"></Label>
+                                                <CheckBox></CheckBox>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Vertical">
+
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetEnemyIndex" Height="40" Click="btnGetEnemyIndex_Click" Content="{DynamicResource btnGetEnemyIndex}"></Button>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetEnemyIndexBmp" Height="40" Click="btnGetEnemyIndexBmp_Click" Content="{DynamicResource btnGetEnemyIndexBmp}"></Button>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetTargetBmp"  Height="40" Click="btnGetTargetBmp_Click" Content="{DynamicResource btnGetTargetBmp}"></Button>
+                                        <StackPanel Orientation="Vertical">
+                                            <Label Content="{DynamicResource labelGetTargetX}"></Label>
+                                            <TextBox Width="40" Name="textGetTargetBmpX" PreviewTextInput ="textGetTargetBmp_PreviewTextInput"></TextBox>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <Label Content="{DynamicResource labelGetTargetY}"></Label>
+                                            <TextBox Width="40" Name="textGetTargetBmpY" PreviewTextInput ="textGetTargetBmp_PreviewTextInput"></TextBox>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <Label Content="{DynamicResource labelGetTargetWidth}"></Label>
+                                            <TextBox Width="40" Name="textGetTargetBmpWidth" PreviewTextInput ="textGetTargetBmp_PreviewTextInput"></TextBox>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <Label Content="{DynamicResource labelGetTargetHeight}"></Label>
+                                            <TextBox Width="40" Name="textGetTargetBmpHeight" PreviewTextInput ="textGetTargetBmp_PreviewTextInput"></TextBox>
+                                        </StackPanel>
+                                    </StackPanel>
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetEnemyIndex" Height="40" Click="btnGetEnemyIndex_Click" Content="{DynamicResource btnGetEnemyIndex}"></Button>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetEnemyIndexBmp" Height="40" Click="btnGetEnemyIndexBmp_Click" Content="{DynamicResource btnGetEnemyIndexBmp}"></Button>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnGetTargetBmp"  Height="40" Click="btnGetTargetBmp_Click" Content="{DynamicResource btnGetTargetBmp}"></Button>
-                                    <StackPanel Orientation="Vertical">
-                                        <Label Content="{DynamicResource labelGetTargetX}"></Label>
-                                        <TextBox Width="40" Name="textGetTargetBmpX" PreviewTextInput ="textGetTargetBmp_PreviewTextInput"></TextBox>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical">
-                                        <Label Content="{DynamicResource labelGetTargetY}"></Label>
-                                        <TextBox Width="40" Name="textGetTargetBmpY" PreviewTextInput ="textGetTargetBmp_PreviewTextInput"></TextBox>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical">
-                                        <Label Content="{DynamicResource labelGetTargetWidth}"></Label>
-                                        <TextBox Width="40" Name="textGetTargetBmpWidth" PreviewTextInput ="textGetTargetBmp_PreviewTextInput"></TextBox>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical">
-                                        <Label Content="{DynamicResource labelGetTargetHeight}"></Label>
-                                        <TextBox Width="40" Name="textGetTargetBmpHeight" PreviewTextInput ="textGetTargetBmp_PreviewTextInput"></TextBox>
-                                    </StackPanel>
-                                </StackPanel>    
                             </StackPanel>
                         </StackPanel>
-                    </StackPanel>
+                    </ScrollViewer>
                 </TabItem>
                 <TabItem Name="tabAutoBattle" Header="{DynamicResource tabAutoBattle}">
                     <StackPanel Orientation="Horizontal">

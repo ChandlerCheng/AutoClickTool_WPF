@@ -216,15 +216,15 @@ namespace AutoClickTool_WPF
         private void btnCurrentStatusCheck_Click(object sender, RoutedEventArgs e)
         {
             SystemSetting.GetGameWindow();
-            if (GameFunction.BattleCheck_Player(false))
+            if (GameFunction.BattleCheck_Player())
             {
                 MessageBox.Show($"人物視角\n");
             }
-            else if (GameFunction.BattleCheck_Pet(false))
+            else if (GameFunction.BattleCheck_Pet())
             {
                 MessageBox.Show($"寵物視角\n");
             }
-            else if (GameFunction.NormalCheck(false))
+            else if (GameFunction.NormalCheck())
             {
                 MessageBox.Show($"非戰鬥視角\n");
             }
@@ -237,7 +237,7 @@ namespace AutoClickTool_WPF
         private void btnGetEnemyIndex_Click(object sender, RoutedEventArgs e)
         {
             SystemSetting.GetGameWindow();
-            int index = GameFunction.getEnemyCoor(true);
+            int index = GameFunction.getEnemyCoor();
             if (index > 0)
             {
                 MessageBox.Show($"取得怪物序列為第 '{index}' 隻");
@@ -541,9 +541,9 @@ namespace AutoClickTool_WPF
         public static Key petActionKey = Key.F5;
         public static void AutoBattle()
         {
-            if (GameFunction.BattleCheck_Player(false) == true)
+            if (GameFunction.BattleCheck_Player() == true)
             {
-                int i = GameFunction.getEnemyCoor(false);
+                int i = GameFunction.getEnemyCoor();
                 if (i > 0)
                 {
                     GameFunction.castSpellOnTarget(Coordinate.Enemy[i - 1, 0], Coordinate.Enemy[i - 1, 1], playerActionKey, 10);
@@ -555,7 +555,7 @@ namespace AutoClickTool_WPF
                 if (pollingEnemyIndex > 9)
                     pollingEnemyIndex = 0;
             }
-            else if (GameFunction.BattleCheck_Pet(false) == true)
+            else if (GameFunction.BattleCheck_Pet() == true)
             {
                 if (isPetSupport)
                 {
@@ -572,11 +572,11 @@ namespace AutoClickTool_WPF
         }
         public static void AutoDefend()
         {
-            if (GameFunction.BattleCheck_Player(false) == true)
+            if (GameFunction.BattleCheck_Player() == true)
             {
                 GameFunction.pressDefendButton();
             }
-            else if (GameFunction.BattleCheck_Pet(false) == true)
+            else if (GameFunction.BattleCheck_Pet() == true)
             {
                 GameFunction.pressDefendButton();
             }
@@ -586,11 +586,11 @@ namespace AutoClickTool_WPF
         }
         public static void AutoEnterBattle()
         {
-            if (GameFunction.BattleCheck_Player(false) == true)
+            if (GameFunction.BattleCheck_Player() == true)
             {
                 GameFunction.pressDefendButton();
             }
-            else if (GameFunction.BattleCheck_Pet(false) == true)
+            else if (GameFunction.BattleCheck_Pet() == true)
             {
                 if (isPetSupport)
                 {
@@ -604,7 +604,7 @@ namespace AutoClickTool_WPF
             else
             {
                 // 自動招怪
-                if (GameFunction.NormalCheck(false) == true)
+                if (GameFunction.NormalCheck() == true)
                 {
                     KeyboardSimulator.KeyPress(Key.F5);
                     Thread.Sleep(50);
@@ -613,11 +613,11 @@ namespace AutoClickTool_WPF
         }
         public static void AutoBuff()
         {
-            if (GameFunction.BattleCheck_Player(false) == true)
+            if (GameFunction.BattleCheck_Player() == true)
             {
                 GameFunction.castSpellOnTarget(Coordinate.Friends[buffTarget, 0], Coordinate.Friends[buffTarget, 1], playerActionKey, 10);
             }
-            else if (GameFunction.BattleCheck_Pet(false) == true)
+            else if (GameFunction.BattleCheck_Pet() == true)
             {
                 if (isPetSupport)
                 {
@@ -645,7 +645,7 @@ namespace AutoClickTool_WPF
             MouseSimulator.LeftMousePress(x, y);
             Thread.Sleep(delay);
         }
-        public static bool NormalCheck(bool IsDebug)
+        public static bool NormalCheck()
         {
 
             int x_LU, y_LU;
@@ -666,7 +666,7 @@ namespace AutoClickTool_WPF
             // 比對圖像
             double Final_LU = BitmapFunction.CompareImages(screenshot_LevelUp, levelUpBMP);
 
-            if (IsDebug == true)
+            if (DebugFunction.IsDebugMsg == true)
             {
                 MessageBox.Show($"玩家檢測值為 '{Final_LU}')\n");
             }
@@ -676,7 +676,7 @@ namespace AutoClickTool_WPF
             else
                 return false;
         }
-        public static bool BattleCheck_Player(bool IsDebug)
+        public static bool BattleCheck_Player()
         {
             int x_key, y_key;
             int xOffset_key = Coordinate.windowBoxLineOffset + 766;
@@ -696,7 +696,7 @@ namespace AutoClickTool_WPF
             // 比對圖像
             double Final_KeyBar = BitmapFunction.CompareImages(screenshot_keyBar, fight_keybarBMP);
 
-            if (IsDebug == true)
+            if (DebugFunction.IsDebugMsg == true)
             {
                 MessageBox.Show($"玩家檢測值為 '{Final_KeyBar}')\n");
             }
@@ -706,7 +706,7 @@ namespace AutoClickTool_WPF
             else
                 return false;
         }
-        public static bool BattleCheck_Pet(bool IsDebug)
+        public static bool BattleCheck_Pet()
         {
             int x_key, y_key;
             int xOffset_key = Coordinate.windowBoxLineOffset + 766;
@@ -726,7 +726,7 @@ namespace AutoClickTool_WPF
             // 比對圖像
             double Final_KeyBar = BitmapFunction.CompareImages(screenshot_keyBarPet, fight_keybarPetBMP);
 
-            if (IsDebug == true)
+            if (DebugFunction.IsDebugMsg == true)
             {
                 MessageBox.Show($"寵物檢測值為 '{Final_KeyBar}')\n");
             }
@@ -752,10 +752,10 @@ namespace AutoClickTool_WPF
             Thread.Sleep(50);
             MouseSimulator.MoveMouseTo(407, 260);
         }
-        public static int getEnemyCoor(bool IsDebug)
+        public static int getEnemyCoor()
         {
             int result = 0;
-            if (BattleCheck_Player(false) == true || BattleCheck_Pet(false) == true)
+            if (BattleCheck_Player() == true || BattleCheck_Pet() == true)
             {
                 int xOffset = Coordinate.windowBoxLineOffset + Coordinate.windowTop[0];
                 int yOffset = Coordinate.windowHOffset + 1 + Coordinate.windowTop[1];
@@ -775,17 +775,17 @@ namespace AutoClickTool_WPF
                         result = i + 1;
                         return result;
                     }
-                    if (IsDebug)
+                    if(DebugFunction.IsDebugMsg == true)
                         MessageBox.Show($"檢查第'{i}'位置時 , 比對值為'{EnemyExistRatio}'");
                 }
 
-                if (IsDebug)
+                if(DebugFunction.IsDebugMsg == true)
                     MessageBox.Show($"無法取得怪物序列");
 
                 return 0;
             }
 
-            if (IsDebug)
+            if(DebugFunction.IsDebugMsg == true)
                 MessageBox.Show($"非戰鬥狀態");
             return 0;
         }
@@ -975,9 +975,11 @@ namespace AutoClickTool_WPF
     }
     public class DebugFunction
     {
+        public static bool IsDebugMsg = false;
+        public static bool IsDebugDownloadImg=false;
         public static void captureAllEnemyDotScreen()
         {
-            //if (GameFunction.BattleCheck_Player(false) == true || GameFunction.BattleCheck_Pet(false) == true)
+            //if (GameFunction.BattleCheck_Player() == true || GameFunction.BattleCheck_Pet() == true)
             {
                 int xOffset = Coordinate.windowBoxLineOffset + Coordinate.windowTop[0];
                 int yOffset = Coordinate.windowHOffset + 1 + Coordinate.windowTop[1];
