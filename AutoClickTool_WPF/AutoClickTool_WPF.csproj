@@ -119,5 +119,14 @@
   <ItemGroup>
     <None Include="Resources\favicon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\win10_fighting_keybar_pet.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\win10_fighting_keybar_player.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\win10_levelup.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

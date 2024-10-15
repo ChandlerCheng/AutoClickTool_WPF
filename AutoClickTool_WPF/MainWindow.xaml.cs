@@ -20,7 +20,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
-
 namespace AutoClickTool_WPF
 {
     /// <summary>
@@ -31,10 +30,27 @@ namespace AutoClickTool_WPF
         private static Task actionTask;
         private static bool isEnable = false;
         private static bool isWindowLoaded = false;
-        private static int tabFunctionSelected = 0;
+        private static int tabFunctionSelected = 0;        
         private static CancellationTokenSource cancellationTokenSource;
 
         #region 程式初始化
+        // 定義結構來存儲版本資訊
+        [StructLayout(LayoutKind.Sequential)]
+        public struct OSVERSIONINFOEX
+        {
+            public uint dwOSVersionInfoSize;
+            public uint dwMajorVersion;
+            public uint dwMinorVersion;
+            public uint dwBuildNumber;
+            public uint dwPlatformId;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+            public string szCSDVersion;
+        }
+
+        // 使用 P/Invoke 調用 RtlGetVersion
+        [DllImport("ntdll.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern int RtlGetVersion(ref OSVERSIONINFOEX versionInfo);
+
         public MainWindow()
         {
             InitializeComponent();
@@ -42,6 +58,16 @@ namespace AutoClickTool_WPF
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
+
+            OSVERSIONINFOEX osVersion = new OSVERSIONINFOEX();
+            RtlGetVersion(ref osVersion);
+
+            string version = $"{osVersion.dwMajorVersion}.{osVersion.dwMinorVersion}.{osVersion.dwBuildNumber}";
+
+            if (osVersion.dwMajorVersion == 10)
+                SystemSetting.isWin10 = true;
+
+
             // 此為初始化怪物檢查點 , 務必在視窗打開時優先動作
             Coordinate.CalculateEnemyCheckXY();
             var helper = new WindowInteropHelper(this);
@@ -627,8 +653,12 @@ namespace AutoClickTool_WPF
             int yOffset_LU = Coordinate.windowHOffset;
             x_LU = Coordinate.windowTop[0] + xOffset_LU;
             y_LU = Coordinate.windowTop[1] + yOffset_LU;
+            Bitmap levelUpBMP;
 
-            Bitmap levelUpBMP = Properties.Resources.win7_levelup;
+            if (SystemSetting.isWin10==true)
+                 levelUpBMP = Properties.Resources.win10_levelup;
+            else 
+                 levelUpBMP = Properties.Resources.win7_levelup;
 
             // 從畫面上擷取指定區域的圖像
             Bitmap screenshot_LevelUp = BitmapFunction.CaptureScreen(x_LU, y_LU, 50, 43);
@@ -651,11 +681,15 @@ namespace AutoClickTool_WPF
             int x_key, y_key;
             int xOffset_key = Coordinate.windowBoxLineOffset + 766;
             int yOffset_key = Coordinate.windowHOffset + 98;
+            Bitmap fight_keybarBMP;
 
             x_key = Coordinate.windowTop[0] + xOffset_key;
             y_key = Coordinate.windowTop[1] + yOffset_key;
 
-            Bitmap fight_keybarBMP = Properties.Resources.win7_fighting_keybar_player;
+            if (SystemSetting.isWin10 == true)
+                 fight_keybarBMP = Properties.Resources.win10_fighting_keybar_player;
+            else
+                 fight_keybarBMP = Properties.Resources.win7_fighting_keybar_player;
             // 從畫面上擷取指定區域的圖像
             Bitmap screenshot_keyBar = BitmapFunction.CaptureScreen(x_key, y_key, 33, 34);
 
@@ -677,11 +711,15 @@ namespace AutoClickTool_WPF
             int x_key, y_key;
             int xOffset_key = Coordinate.windowBoxLineOffset + 766;
             int yOffset_key = Coordinate.windowHOffset + 98;
+            Bitmap fight_keybarPetBMP;
 
             x_key = Coordinate.windowTop[0] + xOffset_key;
             y_key = Coordinate.windowTop[1] + yOffset_key;
 
-            Bitmap fight_keybarPetBMP = Properties.Resources.win7_fighting_keybar_pet;
+            if (SystemSetting.isWin10 == true)
+                 fight_keybarPetBMP = Properties.Resources.win10_fighting_keybar_pet;
+            else
+                 fight_keybarPetBMP = Properties.Resources.win7_fighting_keybar_pet;
             // 從畫面上擷取指定區域的圖像
             Bitmap screenshot_keyBarPet = BitmapFunction.CaptureScreen(x_key, y_key, 33, 34);
 
@@ -1077,6 +1115,9 @@ namespace AutoClickTool_WPF
     }
     public class SystemSetting
     {
+        // Windows 版本判斷
+        public static bool isWin10 = false;
+
         // 引入 RegisterHotKey API
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);

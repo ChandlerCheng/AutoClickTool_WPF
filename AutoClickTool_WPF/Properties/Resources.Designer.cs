@@ -63,6 +63,36 @@ namespace AutoClickTool_WPF.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        public static System.Drawing.Bitmap win10_fighting_keybar_pet {
+            get {
+                object obj = ResourceManager.GetObject("win10_fighting_keybar_pet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        public static System.Drawing.Bitmap win10_fighting_keybar_player {
+            get {
+                object obj = ResourceManager.GetObject("win10_fighting_keybar_player", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        public static System.Drawing.Bitmap win10_levelup {
+            get {
+                object obj = ResourceManager.GetObject("win10_levelup", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         public static System.Drawing.Bitmap win7_fighting_keybar {
             get {
                 object obj = ResourceManager.GetObject("win7_fighting_keybar", resourceCulture);
