@@ -22,6 +22,7 @@
     <system:String x:Key="tabAutoDefend">Auto Defense</system:String>
     <system:String x:Key="tabEnterBattleKey">Auto Summon</system:String>
     <system:String x:Key="tabBuffTarget">Auto Buff</system:String>
+    <system:String x:Key="tabAuxiliaryFunctions">Auxiliary Functions</system:String>
     <!-- tabTestFunction Content -->
     <system:String x:Key="btnCurrentStatusCheck">Check Current Status</system:String>
     <system:String x:Key="btnGetEnemyIndex">Get Enemy Order</system:String>
@@ -42,7 +43,6 @@
     <system:String x:Key="target3">Front Row 3</system:String>
     <system:String x:Key="target4">Front Row 4</system:String>
     <system:String x:Key="target5">Front Row 5</system:String>
-
     <!-- tabAutoBattle Content -->
     <system:String x:Key="labelAttackKey">Attack Hotkey</system:String>
     <!-- tabAutoDefend Content -->
@@ -53,5 +53,15 @@
     <!-- tabBuffTarget Content -->
     <system:String x:Key="labelBuffKey">Buff Hotkey</system:String>
     <system:String x:Key="labelBuffTarget">Buff Target</system:String>
+    <!-- DebugMessage Content -->
+    <system:String x:Key="msgDebugGameTitleIsError">The game has not started or an error has occurred</system:String>
+    <system:String x:Key="msgDebugGameSatsut_Player">Player perspective</system:String>
+    <system:String x:Key="msgDebugGameSatsut_Pet">Pet perspective</system:String>
+    <system:String x:Key="msgDebugGameSatsut_NotBattle">Non-battle perspective</system:String>
+    <system:String x:Key="msgDebugGameSatsut_Exception_Status">Exception status</system:String>
+
+    <system:String x:Key="msgDebugGameGetEnemyIndex">The enemy sequence number is</system:String>
+    <system:String x:Key="msgDebugGameGetEnemyUnit">unit</system:String>
+    <system:String x:Key="msgDebugGameGetEnemyError">Failed to get enemy sequence</system:String>
 
 </ResourceDictionary>

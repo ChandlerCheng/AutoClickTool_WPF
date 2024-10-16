@@ -101,6 +101,8 @@ namespace AutoClickTool_WPF
                 case 5:
                     GameScript.AutoBuff();
                     break;
+                case 6:
+                    break;
                 default:
                     break;
             }
@@ -116,17 +118,11 @@ namespace AutoClickTool_WPF
                     // 更新視窗的 Title
                     window.Dispatcher.Invoke(() =>
                     {
-                        if (Application.Current.Resources.Contains("windowTitleFunction") && Application.Current.Resources.Contains("windowTitleRuning") && Application.Current.Resources.Contains("windowTitleIs"))
-                        {
-                            // 單純想讓Title可以隨語系改變好看用
-                            window.Title = Application.Current.Resources["windowTitleFunction"].ToString() + " '" + tabFunctionSelected +
-                            "'" + " " + Application.Current.Resources["windowTitleIs"].ToString() + " " +
-                            Application.Current.Resources["windowTitleRuning"].ToString();
-                        }
-                        else
-                        {
-                            window.Title = $"功能'{tabFunctionSelected}'啟動中...";
-                        }
+                        // 單純想讓Title可以隨語系改變好看用
+                        window.Title = Application.Current.Resources["windowTitleFunction"].ToString() + " '" + tabFunctionSelected +
+                        "'" + " " + Application.Current.Resources["windowTitleIs"].ToString() + " " +
+                        Application.Current.Resources["windowTitleRuning"].ToString();
+
                     });
                     isEnable = false;
                 }
@@ -137,8 +133,7 @@ namespace AutoClickTool_WPF
             // 更新視窗的 Title
             window.Dispatcher.Invoke(() =>
             {
-                if (Application.Current.Resources.Contains("windowTitleSuspending"))
-                    window.Title = Application.Current.Resources["windowTitleSuspending"].ToString();
+                window.Title = Application.Current.Resources["windowTitleSuspending"].ToString();
             });
             isEnable = false;
         }
@@ -148,7 +143,8 @@ namespace AutoClickTool_WPF
             SystemSetting.GetGameWindow();
             if (Coordinate.IsGetWindows != true)
             {
-                MessageBox.Show($"遊戲尚未啟動或發生錯誤");
+                MessageBox.Show(Application.Current.Resources["msgDebugGameTitleIsError"].ToString());
+
                 return;
             }
 #endif
@@ -430,7 +426,7 @@ namespace AutoClickTool_WPF
                             GameScript.isSummonerAttack = true;
                             int select;
                             select = tab4ComboSummonerAttackKey.SelectedIndex;
-                            setSummonerAttackKey(select);                            
+                            setSummonerAttackKey(select);
                         }
                         if (tab4CheckPetSupport.IsChecked == true)
                         {
@@ -529,19 +525,19 @@ namespace AutoClickTool_WPF
             SystemSetting.GetGameWindow();
             if (GameFunction.BattleCheck_Player())
             {
-                MessageBox.Show($"人物視角\n");
+                MessageBox.Show(Application.Current.Resources["msgDebugGameSatsut_Player"].ToString());
             }
             else if (GameFunction.BattleCheck_Pet())
             {
-                MessageBox.Show($"寵物視角\n");
+                MessageBox.Show(Application.Current.Resources["msgDebugGameSatsut_Pet"].ToString());
             }
             else if (GameFunction.NormalCheck())
             {
-                MessageBox.Show($"非戰鬥視角\n");
+                MessageBox.Show(Application.Current.Resources["msgDebugGameSatsut_NotBattle"].ToString());
             }
             else
             {
-                MessageBox.Show($"例外情況\n");
+                MessageBox.Show(Application.Current.Resources["msgDebugGameSatsut_Exception_Status"].ToString());
             }
         }
 
@@ -551,11 +547,11 @@ namespace AutoClickTool_WPF
             int index = GameFunction.getEnemyCoor();
             if (index > 0)
             {
-                MessageBox.Show($"取得怪物序列為第 '{index}' 隻");
+                MessageBox.Show(Application.Current.Resources["msgDebugGameGetEnemyIndex"].ToString()+index+ Application.Current.Resources["msgDebugGameGetEnemyUnit"].ToString());
             }
             else
             {
-                MessageBox.Show($"無法取得怪物序列");
+                MessageBox.Show(Application.Current.Resources["msgDebugGameGetEnemyError"].ToString());
             }
         }
 
@@ -607,6 +603,9 @@ namespace AutoClickTool_WPF
                             break;
                         case "tabAutoBuff":
                             tabFunctionSelected = 5;
+                            break;
+                        case "tabAuxiliaryFunctions":
+                            tabFunctionSelected = 6;
                             break;
                         default:
                             tabFunctionSelected = 1;
@@ -889,7 +888,7 @@ namespace AutoClickTool_WPF
                 for (int i = 0; i < 10; i++)
                     enemyGetBmp[i] = BitmapFunction.CaptureScreen(Coordinate.checkEnemy[i, 0] + xOffset, Coordinate.checkEnemy[i, 1] + yOffset, 1, 1);
 
-                if (SystemSetting.isWin10==true)
+                if (SystemSetting.isWin10 == true)
                     EnemyExistColor = System.Drawing.Color.FromArgb(189, 190, 189);
                 else
                     EnemyExistColor = System.Drawing.Color.FromArgb(255, 255, 255);
