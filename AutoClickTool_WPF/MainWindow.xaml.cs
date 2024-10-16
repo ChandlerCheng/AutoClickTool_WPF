@@ -84,11 +84,11 @@ namespace AutoClickTool_WPF
 #if DEBUG
             labelBuildType.Content = "Debug";
 #endif
-            labelBuildType.Content = "Release";            
+            labelBuildType.Content = "Release";
             isWindowLoaded = true;
         }
-#endregion
-#region 遊戲中動作
+        #endregion
+        #region 遊戲中動作
         private static void BattleLoop()
         {
             switch (tabFunctionSelected)
@@ -111,8 +111,8 @@ namespace AutoClickTool_WPF
                     break;
             }
         }
-#endregion
-#region 執行緒動作
+        #endregion
+        #region 執行緒動作
         private static async Task ActionLoop(CancellationToken token, MainWindow window)
         {
             while (!token.IsCancellationRequested)
@@ -179,8 +179,8 @@ namespace AutoClickTool_WPF
                 isEnable = true;
             }
         }
-#endregion
-#region 統整資訊
+        #endregion
+        #region 統整資訊
         public static void setGameScriptFlagDefault()
         {
             GameScript.isPetSupport = false;
@@ -328,7 +328,8 @@ namespace AutoClickTool_WPF
                     GameScript.petSupTarget = 4;
                     break;
                 case 5:
-                    GameScript.petSupTarget = 5;
+                    GameScript.petSupTarget = 0;
+                    GameScript.isPetSupportToEnemy = true;
                     break;
                 default:
                     GameScript.petSupTarget = 0;
@@ -354,9 +355,6 @@ namespace AutoClickTool_WPF
                     break;
                 case 4:
                     GameScript.buffTarget = 4;
-                    break;
-                case 5:
-                    GameScript.buffTarget = 5;
                     break;
                 default:
                     GameScript.buffTarget = 0;
@@ -529,8 +527,8 @@ namespace AutoClickTool_WPF
                     break;
             }
         }
-#endregion
-#region 熱鍵觸發事件
+        #endregion
+        #region 熱鍵觸發事件
         private const int WM_HOTKEY = 0x0312;
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
@@ -548,8 +546,8 @@ namespace AutoClickTool_WPF
             }
             return IntPtr.Zero;
         }
-#endregion
-#region 視窗關閉
+        #endregion
+        #region 視窗關閉
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
@@ -559,8 +557,8 @@ namespace AutoClickTool_WPF
 
             SystemSetting.UnregisterHotKey(hwnd, SystemSetting.HOTKEY_SCRIPT_EN);
         }
-#endregion
-#region 測試功能按鈕
+        #endregion
+        #region 測試功能按鈕
         private void btnCurrentStatusCheck_Click(object sender, RoutedEventArgs e)
         {
             SystemSetting.GetGameWindow();
@@ -617,8 +615,8 @@ namespace AutoClickTool_WPF
                 DebugFunction.captureTargetScreen(x, y, width, height);
             }
         }
-#endregion
-#region 選擇TAB時設定使用的腳本
+        #endregion
+        #region 選擇TAB時設定使用的腳本
         private void tabControlUsingMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // 檢查視窗是否已完全載入
@@ -659,8 +657,8 @@ namespace AutoClickTool_WPF
                 }
             }
         }
-#endregion
-#region 程式語系變更
+        #endregion
+        #region 程式語系變更
         private void comboLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // 檢查選項是否被選中
@@ -684,8 +682,8 @@ namespace AutoClickTool_WPF
             }
         }
 
-#endregion
-#region 檢查輸入字元
+        #endregion
+        #region 檢查輸入字元
         private void textGetTargetBmp_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             InputMethod.SetIsInputMethodEnabled((TextBox)sender, false);
@@ -693,7 +691,7 @@ namespace AutoClickTool_WPF
             Regex regex = new Regex("[^0-9]+"); // 非數字的正則表達式
             e.Handled = regex.IsMatch(e.Text);  // 如果輸入非數字，則處理輸入事件為無效
         }
-#endregion
+        #endregion
     }
     public class GameScript
     {
@@ -701,11 +699,18 @@ namespace AutoClickTool_WPF
         public static int petSupTarget = 0;
         public static int buffTarget = 0;
         public static bool isPetSupport = false;
+        public static bool isPetSupportToEnemy = false;
         public static bool isSummonerAttack = false;
         public static Key playerActionKey = Key.F5;
         public static Key summonerActionKey = Key.F5;
         public static Key summonerAttackKey = Key.F6;
         public static Key petActionKey = Key.F5;
+        public static void enemyPolling()
+        {
+            pollingEnemyIndex++;
+            if (pollingEnemyIndex > 9)
+                pollingEnemyIndex = 0;
+        }
         public static void AutoBattle()
         {
             if (GameFunction.BattleCheck_Player() == true)
@@ -717,16 +722,25 @@ namespace AutoClickTool_WPF
                     return;
                 }
                 GameFunction.castSpellOnTarget(Coordinate.Enemy[pollingEnemyIndex, 0], Coordinate.Enemy[pollingEnemyIndex, 1], playerActionKey, 10);
-                /* 若無法正常取得怪物座標 , 則直接朝所有怪物位置循環點擊 , 最差頂多讀條一半 */
-                pollingEnemyIndex++;
-                if (pollingEnemyIndex > 9)
-                    pollingEnemyIndex = 0;
+                enemyPolling();
             }
             else if (GameFunction.BattleCheck_Pet() == true)
             {
                 if (isPetSupport)
                 {
-                    GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], petActionKey, 10);
+                    if (isPetSupportToEnemy)
+                    {
+                        int i = GameFunction.getEnemyCoor();
+                        if (i > 0)
+                        {
+                            GameFunction.castSpellOnTarget(Coordinate.Enemy[i - 1, 0], Coordinate.Enemy[i - 1, 1], petActionKey, 10);
+                            return;
+                        }
+                        GameFunction.castSpellOnTarget(Coordinate.Enemy[pollingEnemyIndex, 0], Coordinate.Enemy[pollingEnemyIndex, 1], petActionKey, 10);
+                        enemyPolling();
+                    }
+                    else
+                        GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], petActionKey, 10);
                 }
                 else
                 {
@@ -745,7 +759,24 @@ namespace AutoClickTool_WPF
             }
             else if (GameFunction.BattleCheck_Pet() == true)
             {
-                GameFunction.pressDefendButton();
+                if (isPetSupport)
+                {
+                    if (isPetSupportToEnemy)
+                    {
+                        int i = GameFunction.getEnemyCoor();
+                        if (i > 0)
+                        {
+                            GameFunction.castSpellOnTarget(Coordinate.Enemy[i - 1, 0], Coordinate.Enemy[i - 1, 1], petActionKey, 10);
+                            return;
+                        }
+                        GameFunction.castSpellOnTarget(Coordinate.Enemy[pollingEnemyIndex, 0], Coordinate.Enemy[pollingEnemyIndex, 1], petActionKey, 10);
+                        enemyPolling();
+                    }
+                    else
+                        GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], petActionKey, 10);
+                }
+                else
+                    GameFunction.pressDefendButton();
             }
             else
             {
@@ -761,7 +792,19 @@ namespace AutoClickTool_WPF
             {
                 if (isPetSupport)
                 {
-                    GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], petActionKey, 10);
+                    if (isPetSupportToEnemy)
+                    {
+                        int i = GameFunction.getEnemyCoor();
+                        if (i > 0)
+                        {
+                            GameFunction.castSpellOnTarget(Coordinate.Enemy[i - 1, 0], Coordinate.Enemy[i - 1, 1], petActionKey, 10);
+                            return;
+                        }
+                        GameFunction.castSpellOnTarget(Coordinate.Enemy[pollingEnemyIndex, 0], Coordinate.Enemy[pollingEnemyIndex, 1], petActionKey, 10);
+                        enemyPolling();
+                    }
+                    else
+                        GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], petActionKey, 10);
                 }
                 else
                 {
@@ -788,7 +831,19 @@ namespace AutoClickTool_WPF
             {
                 if (isPetSupport)
                 {
-                    GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], petActionKey, 10);
+                    if (isPetSupportToEnemy)
+                    {
+                        int i = GameFunction.getEnemyCoor();
+                        if (i > 0)
+                        {
+                            GameFunction.castSpellOnTarget(Coordinate.Enemy[i - 1, 0], Coordinate.Enemy[i - 1, 1], petActionKey, 10);
+                            return;
+                        }
+                        GameFunction.castSpellOnTarget(Coordinate.Enemy[pollingEnemyIndex, 0], Coordinate.Enemy[pollingEnemyIndex, 1], petActionKey, 10);
+                        enemyPolling();
+                    }
+                    else
+                        GameFunction.castSpellOnTarget(Coordinate.Friends[petSupTarget, 0], Coordinate.Friends[petSupTarget, 1], petActionKey, 10);
                 }
                 else
                 {

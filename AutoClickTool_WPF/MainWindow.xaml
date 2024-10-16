@@ -112,6 +112,7 @@
                                         <ComboBoxItem Content="{DynamicResource target3}" />
                                         <ComboBoxItem Content="{DynamicResource target4}" />
                                         <ComboBoxItem Content="{DynamicResource target5}" />
+                                        <ComboBoxItem Content="{DynamicResource target6}" />
                                     </ComboBox>
                                 </StackPanel>
                             </StackPanel>
@@ -147,6 +148,7 @@
                                         <ComboBoxItem Content="{DynamicResource target3}" />
                                         <ComboBoxItem Content="{DynamicResource target4}" />
                                         <ComboBoxItem Content="{DynamicResource target5}" />
+                                        <ComboBoxItem Content="{DynamicResource target6}" />
                                     </ComboBox>
                                 </StackPanel>
                             </StackPanel>
@@ -212,6 +214,7 @@
                                         <ComboBoxItem Content="{DynamicResource target3}" />
                                         <ComboBoxItem Content="{DynamicResource target4}" />
                                         <ComboBoxItem Content="{DynamicResource target5}" />
+                                        <ComboBoxItem Content="{DynamicResource target6}" />
                                     </ComboBox>
                                 </StackPanel>
                             </StackPanel>
@@ -270,6 +273,7 @@
                                         <ComboBoxItem Content="{DynamicResource target3}" />
                                         <ComboBoxItem Content="{DynamicResource target4}" />
                                         <ComboBoxItem Content="{DynamicResource target5}" />
+                                        <ComboBoxItem Content="{DynamicResource target6}" />
                                     </ComboBox>
                                 </StackPanel>
                             </StackPanel>
