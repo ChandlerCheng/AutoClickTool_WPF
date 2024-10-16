@@ -569,6 +569,10 @@ namespace AutoClickTool_WPF
                 int.TryParse(this.textGetTargetBmpWidth.Text, out int width) &&
                 int.TryParse(this.textGetTargetBmpHeight.Text, out int height))
             {
+                // 以下為基本需位移的部分 , 功能類需依照遊戲視窗做偏移
+                x = x + Coordinate.windowBoxLineOffset+ Coordinate.windowTop[0];
+                y = y + Coordinate.windowHOffset+ Coordinate.windowTop[1];
+
                 DebugFunction.captureTargetScreen(x, y, width, height);
             }
         }
