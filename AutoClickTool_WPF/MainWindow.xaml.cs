@@ -143,8 +143,9 @@ namespace AutoClickTool_WPF
         }
         public static async void HotKeyAction_Script_EnableSwitch(MainWindow window)
         {
-#if !DEBUG
+
             SystemSetting.GetGameWindow();
+#if !DEBUG
             if (Coordinate.IsGetWindows != true)
             {
                 MessageBox.Show(Application.Current.Resources["msgDebugGameTitleIsError"].ToString());
@@ -786,7 +787,19 @@ namespace AutoClickTool_WPF
         {
             if (GameFunction.BattleCheck_Player() == true)
             {
-                GameFunction.pressDefendButton();
+                if (isSummonerAttack)
+                {
+                    int i = GameFunction.getEnemyCoor();
+                    if (i > 0)
+                    {
+                        GameFunction.castSpellOnTarget(Coordinate.Enemy[i - 1, 0], Coordinate.Enemy[i - 1, 1], summonerAttackKey, 10);
+                        return;
+                    }
+                    GameFunction.castSpellOnTarget(Coordinate.Enemy[pollingEnemyIndex, 0], Coordinate.Enemy[pollingEnemyIndex, 1], summonerAttackKey, 10);
+                    enemyPolling();
+                }
+                else
+                    GameFunction.pressDefendButton();
             }
             else if (GameFunction.BattleCheck_Pet() == true)
             {
