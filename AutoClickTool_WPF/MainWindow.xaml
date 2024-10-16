@@ -20,6 +20,7 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="{DynamicResource labelVersion}"></Label>
                 <Label Content="{DynamicResource labelVersionNumber}"></Label>
+                <Label Name="labelBuildType"></Label>
             </StackPanel>
             <TabControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="4"  Margin="2.5,5,5,1"  Name="tabControlUsingMethod" SelectionChanged ="tabControlUsingMethod_SelectionChanged" TabStripPlacement="Top">
                 <TabItem Name="tabTestFunction" Header="{DynamicResource tabTestFunction}" >
@@ -84,6 +85,7 @@
                                         <ComboBoxItem>F10</ComboBoxItem>
                                         <ComboBoxItem>F12</ComboBoxItem>
                                     </ComboBox>
+                                    <Label Name="tab2LabelAutoAttackKeyDebug"></Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="{DynamicResource labelPetSupport}"></Label>
@@ -100,6 +102,7 @@
                                         <ComboBoxItem>F10</ComboBoxItem>
                                         <ComboBoxItem>F12</ComboBoxItem>
                                     </ComboBox>
+                                    <Label Name="tab2LabelPetSupportKeyDebug"></Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
@@ -134,6 +137,7 @@
                                         <ComboBoxItem>F10</ComboBoxItem>
                                         <ComboBoxItem>F12</ComboBoxItem>
                                     </ComboBox>
+                                    <Label Name="tab3LabelPetSupportKeyDebug"></Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
@@ -164,10 +168,11 @@
                                         <ComboBoxItem>F10</ComboBoxItem>
                                         <ComboBoxItem>F12</ComboBoxItem>
                                     </ComboBox>
+                                    <Label Name="tab4LabelSummonKeyDebug"></Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="{DynamicResource labelSummonAttackKey}"></Label>
-                                    <CheckBox Name="tab2CheckSummonAttack"></CheckBox>
+                                    <CheckBox Name="tab4CheckSummonAttack"></CheckBox>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="{DynamicResource labelAttackKey}"></Label>
@@ -180,6 +185,7 @@
                                         <ComboBoxItem>F10</ComboBoxItem>
                                         <ComboBoxItem>F12</ComboBoxItem>
                                     </ComboBox>
+                                    <Label Name="tab4LabelSummonAttackKeyDebug"></Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="{DynamicResource labelPetSupport}"></Label>
@@ -196,6 +202,7 @@
                                         <ComboBoxItem>F10</ComboBoxItem>
                                         <ComboBoxItem>F12</ComboBoxItem>
                                     </ComboBox>
+                                    <Label Name="tab4LabelPetSupportKeyDebug"></Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>
@@ -226,6 +233,7 @@
                                         <ComboBoxItem>F10</ComboBoxItem>
                                         <ComboBoxItem>F12</ComboBoxItem>
                                     </ComboBox>
+                                    <Label Name="tab5LabelAutoBuffKeyDebug"></Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="{DynamicResource labelBuffTarget}"></Label>
@@ -252,6 +260,7 @@
                                         <ComboBoxItem>F10</ComboBoxItem>
                                         <ComboBoxItem>F12</ComboBoxItem>
                                     </ComboBox>
+                                    <Label Name="tab5LabelPetSupportKeyDebug"></Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="{DynamicResource labelPetSupportTarget}" ></Label>

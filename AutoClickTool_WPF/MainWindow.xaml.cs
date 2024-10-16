@@ -81,10 +81,14 @@ namespace AutoClickTool_WPF
 #endif
             HwndSource source = HwndSource.FromHwnd(hwnd);
             source.AddHook(WndProc);
+#if DEBUG
+            labelBuildType.Content = "Debug";
+#endif
+            labelBuildType.Content = "Release";            
             isWindowLoaded = true;
         }
-        #endregion
-        #region 遊戲中動作
+#endregion
+#region 遊戲中動作
         private static void BattleLoop()
         {
             switch (tabFunctionSelected)
@@ -107,8 +111,8 @@ namespace AutoClickTool_WPF
                     break;
             }
         }
-        #endregion
-        #region 執行緒動作
+#endregion
+#region 執行緒動作
         private static async Task ActionLoop(CancellationToken token, MainWindow window)
         {
             while (!token.IsCancellationRequested)
@@ -175,8 +179,8 @@ namespace AutoClickTool_WPF
                 isEnable = true;
             }
         }
-        #endregion
-        #region 統整資訊
+#endregion
+#region 統整資訊
         public static void setGameScriptFlagDefault()
         {
             GameScript.isPetSupport = false;
@@ -361,6 +365,16 @@ namespace AutoClickTool_WPF
         }
         public void checkHotkeyGetInfo()
         {
+#if DEBUG
+            tab2LabelAutoAttackKeyDebug.Content = "";
+            tab2LabelPetSupportKeyDebug.Content = "";
+            tab3LabelPetSupportKeyDebug.Content = "";
+            tab4LabelPetSupportKeyDebug.Content = "";
+            tab4LabelSummonAttackKeyDebug.Content = "";
+            tab4LabelSummonKeyDebug.Content = ""; ;
+            tab5LabelAutoBuffKeyDebug.Content = ""; 
+            tab5LabelPetSupportKeyDebug.Content = "";
+#endif
             setGameScriptFlagDefault();
             switch (tabFunctionSelected)
             {
@@ -373,20 +387,29 @@ namespace AutoClickTool_WPF
                             int select;
                             select = tab2ComboPlayerActionKey.SelectedIndex;
                             setPlayerActionKey(select);
+#if DEBUG
+                            tab2LabelAutoAttackKeyDebug.Content = DebugFunction.feedBackKeyString(GameScript.playerActionKey);
+#endif
                         }
-                        // 設定寵物輔助目標
-                        if (tab2comboPetSupportTarget.SelectedIndex != -1)
+                        if (tab2CheckPetSupport.IsChecked == true)
                         {
-                            int select;
-                            select = tab2comboPetSupportTarget.SelectedIndex;
-                            setPetSupportTarget(select);
-                        }
-                        // 設定寵物輔助熱鍵
-                        if (tab2ComboPetActionKey.SelectedIndex != -1)
-                        {
-                            int select;
-                            select = tab2ComboPetActionKey.SelectedIndex;
-                            setPetActionKey(select);
+                            // 設定寵物輔助目標
+                            if (tab2comboPetSupportTarget.SelectedIndex != -1)
+                            {
+                                int select;
+                                select = tab2comboPetSupportTarget.SelectedIndex;
+                                setPetSupportTarget(select);
+                            }
+                            // 設定寵物輔助熱鍵
+                            if (tab2ComboPetActionKey.SelectedIndex != -1)
+                            {
+                                int select;
+                                select = tab2ComboPetActionKey.SelectedIndex;
+                                setPetActionKey(select);
+#if DEBUG
+                                tab2LabelPetSupportKeyDebug.Content = DebugFunction.feedBackKeyString(GameScript.petActionKey);
+#endif
+                            }
                         }
                     }
                     break;
@@ -408,6 +431,9 @@ namespace AutoClickTool_WPF
                                 int select;
                                 select = tab3ComboPetActionKey.SelectedIndex;
                                 setPetActionKey(select);
+#if DEBUG
+                                tab3LabelPetSupportKeyDebug.Content = DebugFunction.feedBackKeyString(GameScript.petActionKey);
+#endif
                             }
                         }
                     }
@@ -420,13 +446,19 @@ namespace AutoClickTool_WPF
                             int select;
                             select = tab4ComboSummonerActionKey.SelectedIndex;
                             setSummonerActionKey(select);
+#if DEBUG
+                            tab4LabelSummonKeyDebug.Content = DebugFunction.feedBackKeyString(GameScript.summonerActionKey);
+#endif
                         }
-                        if (tab2CheckSummonAttack.IsChecked == true)
+                        if (tab4CheckSummonAttack.IsChecked == true)
                         {
                             GameScript.isSummonerAttack = true;
                             int select;
                             select = tab4ComboSummonerAttackKey.SelectedIndex;
                             setSummonerAttackKey(select);
+#if DEBUG
+                            tab4LabelSummonAttackKeyDebug.Content = DebugFunction.feedBackKeyString(GameScript.summonerAttackKey);
+#endif
                         }
                         if (tab4CheckPetSupport.IsChecked == true)
                         {
@@ -444,6 +476,9 @@ namespace AutoClickTool_WPF
                                 int select;
                                 select = tab4ComboPetActionKey.SelectedIndex;
                                 setPetActionKey(select);
+#if DEBUG
+                                tab4LabelPetSupportKeyDebug.Content = DebugFunction.feedBackKeyString(GameScript.petActionKey);
+#endif
                             }
                         }
                     }
@@ -463,6 +498,9 @@ namespace AutoClickTool_WPF
                             int select;
                             select = tab5ComboAutoBuffKey.SelectedIndex;
                             setPlayerActionKey(select);
+#if DEBUG
+                            tab5LabelAutoBuffKeyDebug.Content = DebugFunction.feedBackKeyString(GameScript.playerActionKey);
+#endif
                         }
                         if (tab5CheckPetSupport.IsChecked == true)
                         {
@@ -480,6 +518,9 @@ namespace AutoClickTool_WPF
                                 int select;
                                 select = tab5ComboPetActionKey.SelectedIndex;
                                 setPetActionKey(select);
+#if DEBUG
+                                tab5LabelPetSupportKeyDebug.Content = DebugFunction.feedBackKeyString(GameScript.petActionKey);
+#endif
                             }
                         }
                     }
@@ -488,8 +529,8 @@ namespace AutoClickTool_WPF
                     break;
             }
         }
-        #endregion
-        #region 熱鍵觸發事件
+#endregion
+#region 熱鍵觸發事件
         private const int WM_HOTKEY = 0x0312;
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
@@ -507,8 +548,8 @@ namespace AutoClickTool_WPF
             }
             return IntPtr.Zero;
         }
-        #endregion
-        #region 視窗關閉
+#endregion
+#region 視窗關閉
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
@@ -518,8 +559,8 @@ namespace AutoClickTool_WPF
 
             SystemSetting.UnregisterHotKey(hwnd, SystemSetting.HOTKEY_SCRIPT_EN);
         }
-        #endregion
-        #region 測試功能按鈕
+#endregion
+#region 測試功能按鈕
         private void btnCurrentStatusCheck_Click(object sender, RoutedEventArgs e)
         {
             SystemSetting.GetGameWindow();
@@ -547,7 +588,7 @@ namespace AutoClickTool_WPF
             int index = GameFunction.getEnemyCoor();
             if (index > 0)
             {
-                MessageBox.Show(Application.Current.Resources["msgDebugGameGetEnemyIndex"].ToString()+index+ Application.Current.Resources["msgDebugGameGetEnemyUnit"].ToString());
+                MessageBox.Show(Application.Current.Resources["msgDebugGameGetEnemyIndex"].ToString() + index + Application.Current.Resources["msgDebugGameGetEnemyUnit"].ToString());
             }
             else
             {
@@ -570,14 +611,14 @@ namespace AutoClickTool_WPF
                 int.TryParse(this.textGetTargetBmpHeight.Text, out int height))
             {
                 // 以下為基本需位移的部分 , 功能類需依照遊戲視窗做偏移
-                x = x + Coordinate.windowBoxLineOffset+ Coordinate.windowTop[0];
-                y = y + Coordinate.windowHOffset+ Coordinate.windowTop[1];
+                x = x + Coordinate.windowBoxLineOffset + Coordinate.windowTop[0];
+                y = y + Coordinate.windowHOffset + Coordinate.windowTop[1];
 
                 DebugFunction.captureTargetScreen(x, y, width, height);
             }
         }
-        #endregion
-        #region 選擇TAB時設定使用的腳本
+#endregion
+#region 選擇TAB時設定使用的腳本
         private void tabControlUsingMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // 檢查視窗是否已完全載入
@@ -618,8 +659,8 @@ namespace AutoClickTool_WPF
                 }
             }
         }
-        #endregion
-        #region 程式語系變更
+#endregion
+#region 程式語系變更
         private void comboLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // 檢查選項是否被選中
@@ -643,8 +684,8 @@ namespace AutoClickTool_WPF
             }
         }
 
-        #endregion
-        #region 檢查輸入字元
+#endregion
+#region 檢查輸入字元
         private void textGetTargetBmp_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             InputMethod.SetIsInputMethodEnabled((TextBox)sender, false);
@@ -652,7 +693,7 @@ namespace AutoClickTool_WPF
             Regex regex = new Regex("[^0-9]+"); // 非數字的正則表達式
             e.Handled = regex.IsMatch(e.Text);  // 如果輸入非數字，則處理輸入事件為無效
         }
-        #endregion
+#endregion
     }
     public class GameScript
     {
@@ -1107,6 +1148,38 @@ namespace AutoClickTool_WPF
     {
         public static bool IsDebugMsg = false;
         public static bool IsDebugDownloadImg = false;
+        public static string feedBackKeyString(Key inputKey)
+        {
+            string result = string.Empty;
+            switch (inputKey)
+            {
+                case Key.F5:
+                    result = "F5";
+                    break;
+                case Key.F6:
+                    result = "F6";
+                    break;
+                case Key.F7:
+                    result = "F7";
+                    break;
+                case Key.F8:
+                    result = "F8";
+                    break;
+                case Key.F9:
+                    result = "F9";
+                    break;
+                case Key.F10:
+                    result = "F10";
+                    break;
+                case Key.F12:
+                    result = "F12";
+                    break;
+                default:
+                    result = "";
+                    break;
+            }
+            return result;
+        }
         public static void captureAllEnemyDotScreen()
         {
             //if (GameFunction.BattleCheck_Player() == true || GameFunction.BattleCheck_Pet() == true)
