@@ -48,7 +48,8 @@
     <!-- tabAutoDefend Content -->
     <system:String x:Key="labelDefendKey">防禦熱鍵</system:String>
     <!-- tabAutoEnterBattle Content -->
-    <system:String x:Key="labelEnterBattleKey">召怪熱鍵</system:String>
+    <system:String x:Key="labelSummonKey">召怪熱鍵</system:String>
+    <system:String x:Key="labelSummonAttackKey">自召自打</system:String>
     <!-- tabBuffTarget Content -->
     <system:String x:Key="labelBuffKey">增益熱鍵</system:String>
     <system:String x:Key="labelBuffTarget">增益目標</system:String>

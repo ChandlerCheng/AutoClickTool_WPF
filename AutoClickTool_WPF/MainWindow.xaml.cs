@@ -181,6 +181,11 @@ namespace AutoClickTool_WPF
         }
         #endregion
         #region 統整資訊
+        public static void setGameScriptFlagDefault()
+        {
+            GameScript.isPetSupport = false;
+            GameScript.isSummonerAttack = false;
+        }
         public static void setPlayerActionKey(int selectedIndex)
         {
             switch (selectedIndex)
@@ -238,6 +243,36 @@ namespace AutoClickTool_WPF
                     break;
                 default:
                     GameScript.summonerActionKey = Key.F5;
+                    break;
+            }
+        }
+        public static void setSummonerAttackKey(int selectedIndex)
+        {
+            switch (selectedIndex)
+            {
+                case 0:
+                    GameScript.summonerAttackKey = Key.F5;
+                    break;
+                case 1:
+                    GameScript.summonerAttackKey = Key.F6;
+                    break;
+                case 2:
+                    GameScript.summonerAttackKey = Key.F7;
+                    break;
+                case 3:
+                    GameScript.summonerAttackKey = Key.F8;
+                    break;
+                case 4:
+                    GameScript.summonerAttackKey = Key.F9;
+                    break;
+                case 5:
+                    GameScript.summonerAttackKey = Key.F10;
+                    break;
+                case 6:
+                    GameScript.summonerAttackKey = Key.F12;
+                    break;
+                default:
+                    GameScript.summonerAttackKey = Key.F6;
                     break;
             }
         }
@@ -328,12 +363,14 @@ namespace AutoClickTool_WPF
                     break;
             }
         }
-        public void checkTarGetInfo()
+        public void checkHotkeyGetInfo()
         {
+            setGameScriptFlagDefault();
             switch (tabFunctionSelected)
             {
                 case 2://tab 2 -AutoBattle
                     {
+                        GameScript.isPetSupport = true;
                         // 設定自動攻擊熱鍵
                         if (tab2ComboPlayerActionKey.SelectedIndex != -1)
                         {
@@ -359,9 +396,9 @@ namespace AutoClickTool_WPF
                     break;
                 case 3://AutoDefend
                     {
-
                         if (tab3CheckPetSupport.IsChecked == true)
                         {
+                            GameScript.isPetSupport = true;
                             // 設定寵物輔助目標
                             if (tab3comboPetSupportTarget.SelectedIndex != -1)
                             {
@@ -382,14 +419,22 @@ namespace AutoClickTool_WPF
                 case 4://AutoEnterBattle
                     {
                         // 設定自動招怪熱鍵
-                        if (tab2ComboSummonerActionKey.SelectedIndex != -1)
+                        if (tab4ComboSummonerActionKey.SelectedIndex != -1)
                         {
                             int select;
-                            select = tab2ComboSummonerActionKey.SelectedIndex;
+                            select = tab4ComboSummonerActionKey.SelectedIndex;
                             setSummonerActionKey(select);
+                        }
+                        if (tab2CheckSummonAttack.IsChecked == true)
+                        {
+                            GameScript.isSummonerAttack = true;
+                            int select;
+                            select = tab4ComboSummonerAttackKey.SelectedIndex;
+                            setSummonerAttackKey(select);                            
                         }
                         if (tab4CheckPetSupport.IsChecked == true)
                         {
+                            GameScript.isPetSupport = true;
                             // 設定寵物輔助目標
                             if (tab4comboPetSupportTarget.SelectedIndex != -1)
                             {
@@ -425,6 +470,7 @@ namespace AutoClickTool_WPF
                         }
                         if (tab5CheckPetSupport.IsChecked == true)
                         {
+                            GameScript.isPetSupport = true;
                             // 設定寵物輔助目標
                             if (tab5comboPetSupportTarget.SelectedIndex != -1)
                             {
@@ -457,8 +503,8 @@ namespace AutoClickTool_WPF
                 if (wParam.ToInt32() == SystemSetting.HOTKEY_SCRIPT_EN)
                 {
                     // 檢查所有熱鍵.目標配置
-                    checkTarGetInfo();
-                    // F11 熱鍵觸發，執行相應的動作
+                    checkHotkeyGetInfo();
+                    // 執行相應的腳本
                     HotKeyAction_Script_EnableSwitch(this);
                     handled = true;
                 }
@@ -570,17 +616,6 @@ namespace AutoClickTool_WPF
             }
         }
         #endregion
-        #region 寵物輔助選項
-        private void checkPetSupport_Checked(object sender, RoutedEventArgs e)
-        {
-            GameScript.isPetSupport = true;
-        }
-
-        private void checkPetSupport_Unchecked(object sender, RoutedEventArgs e)
-        {
-            GameScript.isPetSupport = false;
-        }
-        #endregion
         #region 程式語系變更
         private void comboLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -622,8 +657,10 @@ namespace AutoClickTool_WPF
         public static int petSupTarget = 0;
         public static int buffTarget = 0;
         public static bool isPetSupport = false;
+        public static bool isSummonerAttack = false;
         public static Key playerActionKey = Key.F5;
         public static Key summonerActionKey = Key.F5;
+        public static Key summonerAttackKey = Key.F6;
         public static Key petActionKey = Key.F5;
         public static void AutoBattle()
         {

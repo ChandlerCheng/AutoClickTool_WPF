@@ -149,8 +149,24 @@
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="{DynamicResource labelEnterBattleKey}"></Label>
-                                <ComboBox Name="tab2ComboSummonerActionKey" SelectedIndex="0">
+                                <Label Content="{DynamicResource labelSummonKey}"></Label>
+                                <ComboBox Name="tab4ComboSummonerActionKey" SelectedIndex="0">
+                                    <ComboBoxItem>F5</ComboBoxItem>
+                                    <ComboBoxItem>F6</ComboBoxItem>
+                                    <ComboBoxItem>F7</ComboBoxItem>
+                                    <ComboBoxItem>F8</ComboBoxItem>
+                                    <ComboBoxItem>F9</ComboBoxItem>
+                                    <ComboBoxItem>F10</ComboBoxItem>
+                                    <ComboBoxItem>F12</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelSummonAttackKey}"></Label>
+                                <CheckBox Name="tab2CheckSummonAttack"></CheckBox>                                
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource labelAttackKey}"></Label>
+                                <ComboBox Name="tab4ComboSummonerAttackKey" SelectedIndex="1">
                                     <ComboBoxItem>F5</ComboBoxItem>
                                     <ComboBoxItem>F6</ComboBoxItem>
                                     <ComboBoxItem>F7</ComboBoxItem>

@@ -48,7 +48,8 @@
     <!-- tabAutoDefend Content -->
     <system:String x:Key="labelDefendKey">Defense Hotkey</system:String>
     <!-- tabAutoEnterBattle Content -->
-    <system:String x:Key="labelEnterBattleKey">Summon Hotkey</system:String>
+    <system:String x:Key="labelSummonKey">Summon Hotkey</system:String>
+    <system:String x:Key="labelSummonAttackKey">Summon Attack</system:String>
     <!-- tabBuffTarget Content -->
     <system:String x:Key="labelBuffKey">Buff Hotkey</system:String>
     <system:String x:Key="labelBuffTarget">Buff Target</system:String>
