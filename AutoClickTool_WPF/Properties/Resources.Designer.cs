@@ -93,6 +93,16 @@ namespace AutoClickTool_WPF.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        public static System.Drawing.Bitmap Win7_AdjustmentPill {
+            get {
+                object obj = ResourceManager.GetObject("Win7_AdjustmentPill", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         public static System.Drawing.Bitmap win7_fighting_keybar {
             get {
                 object obj = ResourceManager.GetObject("win7_fighting_keybar", resourceCulture);
@@ -123,9 +133,29 @@ namespace AutoClickTool_WPF.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        public static System.Drawing.Bitmap Win7_ItemCheckPoint_479_236_20x20 {
+            get {
+                object obj = ResourceManager.GetObject("Win7_ItemCheckPoint_479_236_20x20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         public static System.Drawing.Bitmap win7_levelup {
             get {
                 object obj = ResourceManager.GetObject("win7_levelup", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        public static System.Drawing.Bitmap Win7_MagicCrystalBox {
+            get {
+                object obj = ResourceManager.GetObject("Win7_MagicCrystalBox", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

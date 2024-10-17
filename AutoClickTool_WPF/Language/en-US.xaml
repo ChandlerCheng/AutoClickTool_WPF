@@ -55,6 +55,9 @@
     <!-- tabBuffTarget Content -->
     <system:String x:Key="labelBuffKey">Buff Hotkey</system:String>
     <system:String x:Key="labelBuffTarget">Buff Target</system:String>
+    <!-- tabAuxiliaryFunctions Content -->
+    <system:String x:Key="labelAutoOpenCrystallBox">Auto open CrystallBox</system:String>
+
     <!-- DebugMessage Content -->
     <system:String x:Key="msgDebugGameTitleIsError">The game has not started or an error has occurred</system:String>
     <system:String x:Key="msgDebugGameSatsut_Player">Player perspective</system:String>

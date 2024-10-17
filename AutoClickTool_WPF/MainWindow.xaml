@@ -32,7 +32,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Button Width="Auto" HorizontalAlignment="Stretch" Name="btnCurrentStatusCheck" Height="40" Click="btnCurrentStatusCheck_Click" Content="{DynamicResource btnCurrentStatusCheck}"></Button>
                                         <StackPanel Orientation="Horizontal">
-                                            <StackPanel Orientation="Vertical">                                                
+                                            <StackPanel Orientation="Vertical">
                                                 <CheckBox></CheckBox>
                                             </StackPanel>
                                         </StackPanel>
@@ -280,15 +280,17 @@
                     </StackPanel>
                 </TabItem>
                 <TabItem Name="tabAuxiliaryFunctions" Header="{DynamicResource tabAuxiliaryFunctions}">
-
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
+                                <Label>自動開魔晶箱</Label>
+                                <RadioButton Name="radioAutoOpenCrystallBox" IsChecked="True"></RadioButton>
+                                <Label>2</Label>
+                                <RadioButton></RadioButton>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
-
             </TabControl>
         </StackPanel>
     </Grid>

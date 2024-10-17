@@ -127,6 +127,9 @@
   <data name="win10_levelup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\win10_levelup.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Win7_AdjustmentPill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Win7_AdjustmentPill.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="win7_fighting_keybar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\win7_fighting_keybar.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -136,7 +139,13 @@
   <data name="win7_fighting_keybar_player" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\win7_fighting_keybar_player.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Win7_ItemCheckPoint_479_236_20x20" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Win7_ItemCheckPoint_479_236_20x20.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="win7_levelup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\win7_levelup.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Win7_MagicCrystalBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Win7_MagicCrystalBox.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

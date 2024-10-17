@@ -55,8 +55,9 @@
     <!-- tabBuffTarget Content -->
     <system:String x:Key="labelBuffKey">增益熱鍵</system:String>
     <system:String x:Key="labelBuffTarget">增益目標</system:String>
-    <!-- tabAuxiliaryFunctions Content -->    
-    
+    <!-- tabAuxiliaryFunctions Content -->
+    <system:String x:Key="labelAutoOpenCrystallBox">自動開啟魔晶箱</system:String>
+
     <!-- DebugMessage Content -->
     <system:String x:Key="msgDebugGameTitleIsError">遊戲尚未啟動或發生錯誤</system:String>
     <system:String x:Key="msgDebugGameSatsut_Player">人物視角</system:String>

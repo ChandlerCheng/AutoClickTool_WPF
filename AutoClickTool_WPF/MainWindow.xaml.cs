@@ -106,6 +106,7 @@ namespace AutoClickTool_WPF
                     GameScript.AutoBuff();
                     break;
                 case 6:
+                    GameScript.AutoUsingItem();
                     break;
                 default:
                     break;
@@ -371,7 +372,7 @@ namespace AutoClickTool_WPF
             tab4LabelPetSupportKeyDebug.Content = "";
             tab4LabelSummonAttackKeyDebug.Content = "";
             tab4LabelSummonKeyDebug.Content = ""; ;
-            tab5LabelAutoBuffKeyDebug.Content = ""; 
+            tab5LabelAutoBuffKeyDebug.Content = "";
             tab5LabelPetSupportKeyDebug.Content = "";
 #endif
             setGameScriptFlagDefault();
@@ -524,6 +525,8 @@ namespace AutoClickTool_WPF
                         }
                     }
                     break;
+                case 6:
+                    break;
                 default:
                     break;
             }
@@ -574,6 +577,10 @@ namespace AutoClickTool_WPF
             else if (GameFunction.NormalCheck())
             {
                 MessageBox.Show(Application.Current.Resources["msgDebugGameSatsut_NotBattle"].ToString());
+                if (GameFunction.ItemTimeCheck())
+                {
+                    MessageBox.Show("當前正開啟物品欄");
+                }
             }
             else
             {
@@ -611,6 +618,12 @@ namespace AutoClickTool_WPF
             {
                 DebugFunction.captureTargetScreen(x, y, width, height);
             }
+        }
+
+        private void btnGetAllItem_Click(object sender, RoutedEventArgs e)
+        {
+            SystemSetting.GetGameWindow();
+            DebugFunction.captureAllItemScreen();
         }
         #endregion
         #region 選擇TAB時設定使用的腳本
@@ -658,7 +671,7 @@ namespace AutoClickTool_WPF
         #region 程式語系變更
         private void LanguageChange()
         {
-            object selected =null;
+            object selected = null;
             int selectedIndex = 0;
 
             //selected = comboLanguage.SelectedItem;
@@ -694,14 +707,12 @@ namespace AutoClickTool_WPF
         }
         #endregion
 
-        private void btnGetAllItem_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
     }
     public class GameScript
     {
         private static int pollingEnemyIndex = 0;
+        private static int pollingItemIndex = 8;
         public static int petSupTarget = 0;
         public static int buffTarget = 0;
         public static bool isPetSupport = false;
@@ -717,6 +728,29 @@ namespace AutoClickTool_WPF
             if (pollingEnemyIndex > 9)
                 pollingEnemyIndex = 0;
         }
+        public static void itemPolling()
+        {
+            pollingItemIndex++;
+            if (pollingItemIndex > 15)
+                pollingItemIndex = 8;
+        }
+
+        public static void scriptOpenItemCB()
+        {
+            int xo, yo;
+            if (GameFunction.CheckItemCB_Coor(pollingItemIndex, out xo, out yo))
+            {
+                // 開啟魔晶寶箱
+                MouseSimulator.RightMousePress(xo, yo);
+                Thread.Sleep(50);
+                // 結束後移開滑鼠避免誤判
+                MouseSimulator.MoveMouseTo(407, 260);
+                Thread.Sleep(50);
+            }
+            else
+                itemPolling();
+        }
+        //==============MainScript=================================
         public static void AutoBattle()
         {
             if (GameFunction.BattleCheck_Player() == true)
@@ -872,6 +906,22 @@ namespace AutoClickTool_WPF
             {
             }
         }
+        public static void AutoUsingItem()
+        {
+            if (GameFunction.NormalCheck() == true)
+            {
+                if (GameFunction.ItemTimeCheck())
+                {
+                    scriptOpenItemCB();
+                }
+                else
+                {
+                    // 打開物品欄
+                    GameFunction.OpenToralItemScene();
+                    Thread.Sleep(50);
+                }
+            }
+        }
     }
     public class GameFunction
     {
@@ -884,6 +934,21 @@ namespace AutoClickTool_WPF
             Thread.Sleep(100);
             MouseSimulator.LeftMousePress(x, y);
             Thread.Sleep(delay);
+        }
+        public static void OpenToralItemScene()
+        {
+            // 按下 Ctrl 鍵
+            KeyboardSimulator.KeyDown(Key.LeftCtrl);
+            Thread.Sleep(50);
+            // 按下 B 鍵
+            KeyboardSimulator.KeyDown(Key.B);
+            Thread.Sleep(50);
+            // 釋放 B 鍵
+            KeyboardSimulator.KeyUp(Key.B);
+            Thread.Sleep(50);
+            // 釋放 Ctrl 鍵
+            KeyboardSimulator.KeyUp(Key.LeftCtrl);
+            Thread.Sleep(50);
         }
         public static bool NormalCheck()
         {
@@ -1032,6 +1097,114 @@ namespace AutoClickTool_WPF
             if (DebugFunction.IsDebugMsg == true)
                 MessageBox.Show($"非戰鬥狀態");
             return 0;
+        }
+        public static bool ItemTimeCheck()
+        {
+
+            int x_ItemCP, y_ItemCP;
+            int xOffset_LU = Coordinate.windowBoxLineOffset + 479;
+            int yOffset_LU = Coordinate.windowHOffset + 236;
+            x_ItemCP = Coordinate.windowTop[0] + xOffset_LU;
+            y_ItemCP = Coordinate.windowTop[1] + yOffset_LU;
+            Bitmap itemTimeBitmap;
+
+            itemTimeBitmap = Properties.Resources.Win7_ItemCheckPoint_479_236_20x20;
+
+            // 從畫面上擷取指定區域的圖像
+            Bitmap screenshot_itemTimeBitmap = BitmapFunction.CaptureScreen(x_ItemCP, y_ItemCP, 20, 20);
+
+            // 比對圖像
+            double Final_ICP = BitmapFunction.CompareImages(screenshot_itemTimeBitmap, itemTimeBitmap);
+
+            if (DebugFunction.IsDebugMsg == true)
+            {
+                MessageBox.Show($"物品欄檢測值為 '{Final_ICP}')\n");
+            }
+
+            if (Final_ICP > 50)
+                return true;
+            else
+                return false;
+        }
+        public static void GetItemCoor(int row, int column, out int x, out int y)
+        {
+            // 初始化初始的 x 和 y
+            int x_first = 515;
+            int y_first = 320;
+            int x_rowOffset = 0;
+            int y_rowOffset = 0;
+
+            // 每列的水平偏移
+            int x_RowOffset = 57;
+            // 每行的垂直偏移
+            int y_columnOffset = 51;
+
+            // 計算 y 值（根據 row 計算 y_rowOffset）
+            y_rowOffset = (column - 1) * y_columnOffset;
+            y = y_first + y_rowOffset;
+
+            // 計算 x 值（根據 column 計算 x_rowOffset）
+            x_rowOffset = (row - 1) * x_RowOffset;
+            x = x_first + x_rowOffset;
+        }
+        public static void GetItemCoor(int i, out int x, out int y)
+        {
+            // 初始化初始的 x 和 y
+            int x_first = 515;
+            int y_first = 320;
+            int x_rowOffset = 0;
+            int y_rowOffset = 0;
+
+            // 每列的水平偏移
+            int x_RowOffset = 57;
+            // 每行的垂直偏移
+            int y_columnOffset = 51;
+
+            // 假設是每列4個項目，根據i來計算row和column
+            int itemsPerRow = 4;
+
+            // 計算 row 和 column
+            int row = (i % itemsPerRow) + 1;     // 行對應的索引 (row)
+            int column = (i / itemsPerRow) + 1;  // 列對應的索引 (column)
+
+            // 計算 y 值（根據 column 計算 y_rowOffset）
+            y_rowOffset = (column - 1) * y_columnOffset;
+            y = y_first + y_rowOffset;
+
+            // 計算 x 值（根據 row 計算 x_rowOffset）
+            x_rowOffset = (row - 1) * x_RowOffset;
+            x = x_first + x_rowOffset;
+        }
+        public static bool CheckItemCB_Coor(int input, out int item_x, out int item_y)
+        {
+            int xo, yo;
+            int xOffset = Coordinate.windowBoxLineOffset;
+            int yOffset = Coordinate.windowHOffset;
+            item_x = 0;
+            item_y = 0;
+            Bitmap screenshot_ItemCBBmpGet;
+            Bitmap ItemCBBmpTarget = Properties.Resources.Win7_MagicCrystalBox;
+            // 取得所有物品欄位                    
+
+            GameFunction.GetItemCoor(input, out xo, out yo);
+            screenshot_ItemCBBmpGet = BitmapFunction.CaptureScreen(xo + xOffset, yo + yOffset, 20, 20);
+
+            // 比對圖像
+            double Final_ICP = BitmapFunction.CompareImages(screenshot_ItemCBBmpGet, ItemCBBmpTarget);
+
+            if (DebugFunction.IsDebugMsg == true)
+            {
+                MessageBox.Show($"物品欄檢測值為 '{Final_ICP}')\n");
+            }
+
+            if (Final_ICP > 50)
+            {
+                item_x = xo + xOffset;
+                item_y = yo + yOffset;
+                return true;
+            }
+            else
+                return false;
         }
     }
     public class BitmapFunction
@@ -1258,7 +1431,7 @@ namespace AutoClickTool_WPF
             //if (GameFunction.BattleCheck_Player() == true || GameFunction.BattleCheck_Pet() == true)
             {
                 int xOffset = Coordinate.windowBoxLineOffset + Coordinate.windowTop[0];
-                int yOffset = Coordinate.windowHOffset + 1 +Coordinate.windowTop[1];
+                int yOffset = Coordinate.windowHOffset + 1 + Coordinate.windowTop[1];
 
                 Bitmap[] enemyGetBmp = new Bitmap[10];
                 int x, y;
@@ -1283,6 +1456,38 @@ namespace AutoClickTool_WPF
             Bitmap GetBmp;
             GetBmp = BitmapFunction.CaptureScreen(x, y, width, height);
             GetBmp.Save("0_Bitmap_" + "_" + "x" + x + "_" + "y" + y + "_" + ".bmp");
+        }
+        public static void captureAllItemScreen()
+        {
+            int xo, yo;
+            int xOffset = Coordinate.windowBoxLineOffset + Coordinate.windowTop[0];
+            int yOffset = Coordinate.windowHOffset + Coordinate.windowTop[1];
+            int row, column, i;
+
+            // 取得物品欄檢查點  479,236  抓小塊 (物品欄)
+            Bitmap ItemCheckBmp = BitmapFunction.CaptureScreen(479 + xOffset, 236 + yOffset, 20, 20);
+            ItemCheckBmp.Save("ItemCheck" + "_Bitmap_" + "_" + "x" + 479 + "_" + "y" + 236 + "_" + ".bmp");
+            // 取得所有物品欄位                    
+            for (i = 0; i < 16; i++)
+            {
+                GameFunction.GetItemCoor(i, out xo, out yo);
+                Bitmap ItemGetBmp = BitmapFunction.CaptureScreen(xo + xOffset, yo + yOffset, 20, 20);
+                ItemGetBmp.Save(i + "_Bitmap_" + "_" + "x" + xo + "_" + "y" + yo + "_" + ".bmp");
+            }
+            //// 取得所有物品欄位
+            //Bitmap[] ItemGetBmp = new Bitmap[16];
+            //i = 0;
+            //// 0~11 , 0123 ,4567,89 10 11
+            //for (row = 1; row < 5; row++)
+            //{
+            //    for (column = 1; column < 5; column++)
+            //    {
+            //        GameFunction.GetItemCoor(row, column, out xo, out yo);
+            //        ItemGetBmp[i] = BitmapFunction.CaptureScreen(xo + xOffset, yo + yOffset, 20, 20);
+            //        ItemGetBmp[i].Save(i + "_Bitmap_" + "_" + "x" + xo + "_" + "y" + yo + "_" + ".bmp");
+            //        i++;
+            //    }
+            //}
         }
     }
     public class MouseSimulator

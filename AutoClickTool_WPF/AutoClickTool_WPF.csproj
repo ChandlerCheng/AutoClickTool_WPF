@@ -128,5 +128,14 @@
   <ItemGroup>
     <None Include="Resources\win10_levelup.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Win7_AdjustmentPill.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Win7_MagicCrystalBox.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Win7_ItemCheckPoint_479_236_20x20.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
