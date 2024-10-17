@@ -28,11 +28,12 @@
     <system:String x:Key="btnGetEnemyIndex">Get Enemy Order</system:String>
     <system:String x:Key="btnGetEnemyIndexBmp">Get Enemy Point Bitmap</system:String>
     <system:String x:Key="btnGetTargetBmp">Get Target Bitmap</system:String>
+    <system:String x:Key="btnGetAllItem">Get Item Bitmap</system:String>
     <!-- TestFunction GetTargetBmp  Content -->
     <system:String x:Key="labelGetTargetX">X</system:String>
     <system:String x:Key="labelGetTargetY">Y</system:String>
     <system:String x:Key="labelGetTargetWidth">Width</system:String>
-    <system:String x:Key="labelGetTargetHeight">Height</system:String>
+    <system:String x:Key="labelGetTargetHeight">Height</system:String>    
     <!-- labelPetSupport Content -->
     <system:String x:Key="labelPetSupport">Pet Support</system:String>
     <system:String x:Key="labelPetSupportKey">Pet Hotkey</system:String>

@@ -28,6 +28,7 @@
     <system:String x:Key="btnGetEnemyIndex">取得怪物次序</system:String>
     <system:String x:Key="btnGetEnemyIndexBmp">取得怪物點圖</system:String>
     <system:String x:Key="btnGetTargetBmp">取得座標圖檔</system:String>
+    <system:String x:Key="btnGetAllItem">取得所有物品</system:String>
     <!-- TestFunction GetTargetBmp  Content -->
     <system:String x:Key="labelGetTargetX">X</system:String>
     <system:String x:Key="labelGetTargetY">Y</system:String>

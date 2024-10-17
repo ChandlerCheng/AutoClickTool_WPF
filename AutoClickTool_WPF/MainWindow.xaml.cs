@@ -609,10 +609,6 @@ namespace AutoClickTool_WPF
                 int.TryParse(this.textGetTargetBmpWidth.Text, out int width) &&
                 int.TryParse(this.textGetTargetBmpHeight.Text, out int height))
             {
-                // 以下為基本需位移的部分 , 功能類需依照遊戲視窗做偏移
-                x = x + Coordinate.windowBoxLineOffset + Coordinate.windowTop[0];
-                y = y + Coordinate.windowHOffset + Coordinate.windowTop[1];
-
                 DebugFunction.captureTargetScreen(x, y, width, height);
             }
         }
@@ -660,13 +656,17 @@ namespace AutoClickTool_WPF
         }
         #endregion
         #region 程式語系變更
-        private void comboLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LanguageChange()
         {
+            object selected =null;
+            int selectedIndex = 0;
+
+            //selected = comboLanguage.SelectedItem;
             // 檢查選項是否被選中
-            if (comboLanguage.SelectedItem != null)
+            if (selected != null)
             {
                 // 根據 ComboBox 的選擇索引執行不同的動作
-                int selectedIndex = comboLanguage.SelectedIndex;
+                //selectedIndex = comboLanguage.SelectedIndex;
 
                 // 檢查選中的索引並執行對應邏輯
                 switch (selectedIndex)
@@ -693,6 +693,11 @@ namespace AutoClickTool_WPF
             e.Handled = regex.IsMatch(e.Text);  // 如果輸入非數字，則處理輸入事件為無效
         }
         #endregion
+
+        private void btnGetAllItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
     public class GameScript
     {
@@ -1253,7 +1258,7 @@ namespace AutoClickTool_WPF
             //if (GameFunction.BattleCheck_Player() == true || GameFunction.BattleCheck_Pet() == true)
             {
                 int xOffset = Coordinate.windowBoxLineOffset + Coordinate.windowTop[0];
-                int yOffset = Coordinate.windowHOffset + 1 + Coordinate.windowTop[1];
+                int yOffset = Coordinate.windowHOffset + 1 +Coordinate.windowTop[1];
 
                 Bitmap[] enemyGetBmp = new Bitmap[10];
                 int x, y;
@@ -1269,14 +1274,15 @@ namespace AutoClickTool_WPF
         }
         public static void captureTargetScreen(int in_x, int in_y, int width, int height)
         {
+            // 取得怪物比較點時 y軸必須得加一
             int xOffset = Coordinate.windowBoxLineOffset + Coordinate.windowTop[0];
-            int yOffset = Coordinate.windowHOffset + 1 + Coordinate.windowTop[1];
+            int yOffset = Coordinate.windowHOffset + Coordinate.windowTop[1];
             int x, y;
             x = xOffset + in_x;
             y = yOffset + in_y;
             Bitmap GetBmp;
             GetBmp = BitmapFunction.CaptureScreen(x, y, width, height);
-            GetBmp.Save("Bitmap_" + "_" + "x" + x + "_" + "y" + y + "_" + ".bmp");
+            GetBmp.Save("0_Bitmap_" + "_" + "x" + x + "_" + "y" + y + "_" + ".bmp");
         }
     }
     public class MouseSimulator
