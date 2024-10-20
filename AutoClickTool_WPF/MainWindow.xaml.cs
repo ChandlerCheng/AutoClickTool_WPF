@@ -769,6 +769,24 @@ namespace AutoClickTool_WPF
             else
                 itemPolling();
         }
+        public static void scriptOpenItemAP()
+        {
+            int xo, yo;
+            if (GameFunction.CheckItemAP_Coor(pollingItemIndex, out xo, out yo))
+            {
+                // 點擊使用
+                MouseSimulator.RightMousePress(xo, yo);
+                Thread.Sleep(50);
+                // 使用確認
+
+
+                // 結束後移開滑鼠避免誤判
+                MouseSimulator.MoveMouseTo(407, 260);
+                Thread.Sleep(50);
+            }
+            else
+                itemPolling();
+        }
         //==============MainScript=================================
         public static void AutoBattle()
         {
@@ -1210,6 +1228,37 @@ namespace AutoClickTool_WPF
             item_y = 0;
             Bitmap screenshot_ItemCBBmpGet;
             Bitmap ItemCBBmpTarget = Properties.Resources.Win7_MagicCrystalBox;
+            // 取得所有物品欄位                    
+
+            GameFunction.GetItemCoor(input, out xo, out yo);
+            screenshot_ItemCBBmpGet = BitmapFunction.CaptureScreen(xo + xOffset, yo + yOffset, 20, 20);
+
+            // 比對圖像
+            double Final_ICP = BitmapFunction.CompareImages(screenshot_ItemCBBmpGet, ItemCBBmpTarget);
+
+            if (DebugFunction.IsDebugMsg == true)
+            {
+                MessageBox.Show($"物品欄檢測值為 '{Final_ICP}')\n");
+            }
+
+            if (Final_ICP > 50)
+            {
+                item_x = xo + xOffset;
+                item_y = yo + yOffset;
+                return true;
+            }
+            else
+                return false;
+        }
+        public static bool CheckItemAP_Coor(int input, out int item_x, out int item_y)
+        {
+            int xo, yo;
+            int xOffset = Coordinate.windowBoxLineOffset;
+            int yOffset = Coordinate.windowHOffset;
+            item_x = 0;
+            item_y = 0;
+            Bitmap screenshot_ItemCBBmpGet;
+            Bitmap ItemCBBmpTarget = Properties.Resources.Win7_AdjustmentPill;
             // 取得所有物品欄位                    
 
             GameFunction.GetItemCoor(input, out xo, out yo);
