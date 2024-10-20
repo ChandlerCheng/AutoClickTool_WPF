@@ -285,8 +285,8 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label>自動開魔晶箱</Label>
                                 <RadioButton Name="radioAutoOpenCrystallBox" IsChecked="True"></RadioButton>
-                                <Label>2</Label>
-                                <RadioButton></RadioButton>
+                                <Label>自動吃調整藥丸</Label>
+                                <RadioButton Name="radioAutoUsingAdjustmentPill"></RadioButton>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

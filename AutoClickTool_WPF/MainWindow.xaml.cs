@@ -363,6 +363,21 @@ namespace AutoClickTool_WPF
                     break;
             }
         }
+        public static void setAuxiliaryFunctions(int auxFunIndex)
+        {
+            // 檢查選中的索引並執行對應邏輯
+            switch (auxFunIndex)
+            {
+                case 1: // 魔晶
+                    GameScript.usingItem = 1;
+                    break;
+                case 2: //調整藥丸
+                    GameScript.usingItem = 2;
+                    break;
+                default:
+                    break;
+            }
+        }
         public void checkHotkeyGetInfo()
         {
 #if DEBUG
@@ -525,7 +540,11 @@ namespace AutoClickTool_WPF
                         }
                     }
                     break;
-                case 6:
+                case 6: // 
+                    if (radioAutoOpenCrystallBox.IsChecked == true)
+                        setAuxiliaryFunctions(1);
+                    else if (radioAutoUsingAdjustmentPill.IsChecked == true)
+                        setAuxiliaryFunctions(2);
                     break;
                 default:
                     break;
@@ -715,6 +734,7 @@ namespace AutoClickTool_WPF
         private static int pollingItemIndex = 8;
         public static int petSupTarget = 0;
         public static int buffTarget = 0;
+        public static int usingItem = 0;
         public static bool isPetSupport = false;
         public static bool isPetSupportToEnemy = false;
         public static bool isSummonerAttack = false;
@@ -734,7 +754,6 @@ namespace AutoClickTool_WPF
             if (pollingItemIndex > 15)
                 pollingItemIndex = 8;
         }
-
         public static void scriptOpenItemCB()
         {
             int xo, yo;
@@ -912,7 +931,14 @@ namespace AutoClickTool_WPF
             {
                 if (GameFunction.ItemTimeCheck())
                 {
-                    scriptOpenItemCB();
+                    switch (usingItem)
+                    {
+                        case 1:
+                            scriptOpenItemCB();
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 else
                 {
