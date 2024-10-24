@@ -395,7 +395,6 @@ namespace AutoClickTool_WPF
             {
                 case 2://tab 2 -AutoBattle
                     {
-                        GameScript.isPetSupport = true;
                         // 設定自動攻擊熱鍵
                         if (tab2ComboPlayerActionKey.SelectedIndex != -1)
                         {
@@ -408,6 +407,7 @@ namespace AutoClickTool_WPF
                         }
                         if (tab2CheckPetSupport.IsChecked == true)
                         {
+                            GameScript.isPetSupport = true;
                             // 設定寵物輔助目標
                             if (tab2comboPetSupportTarget.SelectedIndex != -1)
                             {
@@ -426,10 +426,13 @@ namespace AutoClickTool_WPF
 #endif
                             }
                         }
+                        else
+                            GameScript.isPetSupport = false;
+
                         if (tab2CheckAutoWalk.IsChecked == true)
-                        {
                             GameScript.isAutoWalk = true;
-                        }
+                        else
+                            GameScript.isAutoWalk = false;
                     }
                     break;
                 case 3://AutoDefend
@@ -454,11 +457,14 @@ namespace AutoClickTool_WPF
                                 tab3LabelPetSupportKeyDebug.Content = DebugFunction.feedBackKeyString(GameScript.petActionKey);
 #endif
                             }
-                            if (tab3CheckAutoWalk.IsChecked == true)
-                            {
-                                GameScript.isAutoWalk = true;
-                            }
                         }
+                        else
+                            GameScript.isPetSupport = false;
+
+                        if (tab3CheckAutoWalk.IsChecked == true)
+                            GameScript.isAutoWalk = true;
+                        else
+                            GameScript.isAutoWalk = false;
                     }
                     break;
                 case 4://AutoEnterBattle
@@ -483,6 +489,9 @@ namespace AutoClickTool_WPF
                             tab4LabelSummonAttackKeyDebug.Content = DebugFunction.feedBackKeyString(GameScript.summonerAttackKey);
 #endif
                         }
+                        else
+                            GameScript.isSummonerAttack = false;
+
                         if (tab4CheckPetSupport.IsChecked == true)
                         {
                             GameScript.isPetSupport = true;
@@ -504,6 +513,8 @@ namespace AutoClickTool_WPF
 #endif
                             }
                         }
+                        else
+                            GameScript.isPetSupport = false;
                     }
                     break;
                 case 5://AutoBuff
@@ -546,10 +557,13 @@ namespace AutoClickTool_WPF
 #endif
                             }
                         }
+                        else
+                            GameScript.isPetSupport = false;
+
                         if (tab5CheckAutoWalk.IsChecked == true)
-                        {
                             GameScript.isAutoWalk = true;
-                        }
+                        else
+                            GameScript.isAutoWalk = false;
                     }
                     break;
                 case 6: // 
@@ -815,7 +829,7 @@ namespace AutoClickTool_WPF
                 switch (pollingWalkDirection)
                 {
                     case 0:
-                        MouseSimulator.LeftMousePress(Coordinate.walkPoint[0,0], Coordinate.walkPoint[0, 1]);
+                        MouseSimulator.LeftMousePress(Coordinate.walkPoint[0, 0], Coordinate.walkPoint[0, 1]);
                         Thread.Sleep(delay);
                         break;
                     case 1:
@@ -836,7 +850,7 @@ namespace AutoClickTool_WPF
                         break;
                 }
             }
-                WalkDirectionPolling();
+            WalkDirectionPolling();
         }
         //==============MainScript=================================
         public static void AutoBattle()
@@ -877,7 +891,7 @@ namespace AutoClickTool_WPF
             }
             else
             {
-                if (GameScript.isAutoWalk==true)
+                if (GameScript.isAutoWalk == true)
                 {
                     if (GameFunction.NormalCheck() == true)
                     {
@@ -1459,7 +1473,7 @@ namespace AutoClickTool_WPF
          */
         public static int[,] Enemy = new int[10, 2];
         public static int[,] checkEnemy = new int[10, 2];
-        public static int[,] walkPoint = new int[4,2]; // 上下左右
+        public static int[,] walkPoint = new int[4, 2]; // 上下左右
         /*
                我方座標(目視)
                12345
@@ -1473,9 +1487,9 @@ namespace AutoClickTool_WPF
         public static void CalculateWalkPoint()
         {
             int xOffset = Coordinate.windowBoxLineOffset;
-            int yOffset = Coordinate.windowHOffset ;
+            int yOffset = Coordinate.windowHOffset;
 
-            walkPoint[0, 0] = 411+ xOffset;
+            walkPoint[0, 0] = 411 + xOffset;
             walkPoint[0, 1] = 105 + yOffset;
 
             walkPoint[1, 0] = 102 + xOffset;
