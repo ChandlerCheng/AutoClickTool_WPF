@@ -96,6 +96,10 @@
                                 <Label Content="{DynamicResource labelPetSupport}"></Label>
                                 <CheckBox Name="tab2CheckPetSupport" ></CheckBox>
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource commanFunctionAutoWalk}"></Label>
+                                <CheckBox Name="tab2CheckAutoWalk"></CheckBox>
+                            </StackPanel>
                             <StackPanel Orientation="Horizontal" >
                                 <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
                                 <ComboBox Name="tab2ComboPetActionKey" SelectedIndex="0">
@@ -129,6 +133,10 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelPetSupport}"></Label>
                                 <CheckBox Name="tab3CheckPetSupport" ></CheckBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource commanFunctionAutoWalk}"></Label>
+                                <CheckBox Name="tab3CheckAutoWalk"></CheckBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
                                 <Label Content="{DynamicResource labelPetSupportKey}" ></Label>
@@ -251,6 +259,10 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{DynamicResource labelPetSupport}"></Label>
                                 <CheckBox Name="tab5CheckPetSupport" ></CheckBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{DynamicResource commanFunctionAutoWalk}"></Label>
+                                <CheckBox Name="tab5CheckAutoWalk"></CheckBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" >
                                 <Label Content="{DynamicResource labelPetSupportKey}" ></Label>

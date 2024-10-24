@@ -426,6 +426,10 @@ namespace AutoClickTool_WPF
 #endif
                             }
                         }
+                        if (tab2CheckAutoWalk.IsChecked == true)
+                        {
+                            GameScript.isAutoWalk = true;
+                        }
                     }
                     break;
                 case 3://AutoDefend
@@ -449,6 +453,10 @@ namespace AutoClickTool_WPF
 #if DEBUG
                                 tab3LabelPetSupportKeyDebug.Content = DebugFunction.feedBackKeyString(GameScript.petActionKey);
 #endif
+                            }
+                            if (tab3CheckAutoWalk.IsChecked == true)
+                            {
+                                GameScript.isAutoWalk = true;
                             }
                         }
                     }
@@ -537,6 +545,10 @@ namespace AutoClickTool_WPF
                                 tab5LabelPetSupportKeyDebug.Content = DebugFunction.feedBackKeyString(GameScript.petActionKey);
 #endif
                             }
+                        }
+                        if (tab5CheckAutoWalk.IsChecked == true)
+                        {
+                            GameScript.isAutoWalk = true;
                         }
                     }
                     break;
@@ -731,6 +743,7 @@ namespace AutoClickTool_WPF
     public class GameScript
     {
         private static int pollingEnemyIndex = 0;
+        private static int pollingWalkDirection = 0;
         private static int pollingItemIndex = 8;
         public static int petSupTarget = 0;
         public static int buffTarget = 0;
@@ -738,6 +751,7 @@ namespace AutoClickTool_WPF
         public static bool isPetSupport = false;
         public static bool isPetSupportToEnemy = false;
         public static bool isSummonerAttack = false;
+        public static bool isAutoWalk = false;
         public static Key playerActionKey = Key.F5;
         public static Key summonerActionKey = Key.F5;
         public static Key summonerAttackKey = Key.F6;
@@ -753,6 +767,12 @@ namespace AutoClickTool_WPF
             pollingItemIndex++;
             if (pollingItemIndex > 15)
                 pollingItemIndex = 8;
+        }
+        public static void WalkDirectionPolling()
+        {
+            pollingWalkDirection++;
+            if (pollingWalkDirection > 3)
+                pollingWalkDirection = 0;
         }
         public static void scriptOpenItemCB()
         {
@@ -786,6 +806,37 @@ namespace AutoClickTool_WPF
             }
             else
                 itemPolling();
+        }
+        public static void scriptAutoWalk()
+        {
+            int delay = 200;
+            if (isAutoWalk)
+            {
+                switch (pollingWalkDirection)
+                {
+                    case 0:
+                        MouseSimulator.LeftMousePress(Coordinate.walkPoint[0,0], Coordinate.walkPoint[0, 1]);
+                        Thread.Sleep(delay);
+                        break;
+                    case 1:
+                        MouseSimulator.LeftMousePress(Coordinate.walkPoint[1, 0], Coordinate.walkPoint[1, 1]);
+                        Thread.Sleep(delay);
+                        break;
+                    case 2:
+                        MouseSimulator.LeftMousePress(Coordinate.walkPoint[2, 0], Coordinate.walkPoint[2, 1]);
+                        Thread.Sleep(delay);
+                        break;
+                    case 3:
+                        MouseSimulator.LeftMousePress(Coordinate.walkPoint[3, 0], Coordinate.walkPoint[3, 1]);
+                        Thread.Sleep(delay);
+                        break;
+                    default:
+                        MouseSimulator.LeftMousePress(Coordinate.walkPoint[0, 0], Coordinate.walkPoint[0, 1]);
+                        Thread.Sleep(delay);
+                        break;
+                }
+            }
+                WalkDirectionPolling();
         }
         //==============MainScript=================================
         public static void AutoBattle()
@@ -826,6 +877,13 @@ namespace AutoClickTool_WPF
             }
             else
             {
+                if (GameScript.isAutoWalk==true)
+                {
+                    if (GameFunction.NormalCheck() == true)
+                    {
+                        scriptAutoWalk();
+                    }
+                }
             }
         }
         public static void AutoDefend()
@@ -857,6 +915,13 @@ namespace AutoClickTool_WPF
             }
             else
             {
+                if (GameScript.isAutoWalk == true)
+                {
+                    if (GameFunction.NormalCheck() == true)
+                    {
+                        scriptAutoWalk();
+                    }
+                }
             }
         }
         public static void AutoEnterBattle()
@@ -941,6 +1006,13 @@ namespace AutoClickTool_WPF
             }
             else
             {
+                if (GameScript.isAutoWalk == true)
+                {
+                    if (GameFunction.NormalCheck() == true)
+                    {
+                        scriptAutoWalk();
+                    }
+                }
             }
         }
         public static void AutoUsingItem()
@@ -1387,6 +1459,7 @@ namespace AutoClickTool_WPF
          */
         public static int[,] Enemy = new int[10, 2];
         public static int[,] checkEnemy = new int[10, 2];
+        public static int[,] walkPoint = new int[4,2]; // 上下左右
         /*
                我方座標(目視)
                12345
@@ -1397,6 +1470,23 @@ namespace AutoClickTool_WPF
                56789
         */
         public static int[,] Friends = new int[10, 2];
+        public static void CalculateWalkPoint()
+        {
+            int xOffset = Coordinate.windowBoxLineOffset;
+            int yOffset = Coordinate.windowHOffset ;
+
+            walkPoint[0, 0] = 411+ xOffset;
+            walkPoint[0, 1] = 105 + yOffset;
+
+            walkPoint[1, 0] = 102 + xOffset;
+            walkPoint[1, 1] = 257 + yOffset;
+
+            walkPoint[2, 0] = 652 + xOffset;
+            walkPoint[2, 1] = 261 + yOffset;
+
+            walkPoint[3, 0] = 385 + xOffset;
+            walkPoint[3, 1] = 435 + yOffset;
+        }
         public static void CalculateAllEnemy(int x, int y)
         {
             // 計算第三號敵人的座標 (陣列索引為2)
@@ -1750,7 +1840,7 @@ namespace AutoClickTool_WPF
                 return;
             }
             Coordinate.IsGetWindows = true;
-
+            Coordinate.CalculateWalkPoint();
             /* 
               中心怪物位置會位於 800x600中的 275,290的位置
               遊戲本體800x600
@@ -1778,6 +1868,7 @@ namespace AutoClickTool_WPF
             y_friends3 = Coordinate.windowTop[1] + yOffset_friends3;
 
             Coordinate.CalculateAllFriends(x_friends3, y_friends3);
+
         }
 
         // 加載對應的語系資源字典

@@ -45,6 +45,8 @@
     <system:String x:Key="target4">Front Row 4</system:String>
     <system:String x:Key="target5">Front Row 5</system:String>
     <system:String x:Key="target6">Enemies</system:String>
+    <!-- Comman Content -->
+    <system:String x:Key="commanFunctionAutoWalk">Auto Walk(Battle)</system:String>
     <!-- tabAutoBattle Content -->
     <system:String x:Key="labelAttackKey">Attack Hotkey</system:String>
     <!-- tabAutoDefend Content -->

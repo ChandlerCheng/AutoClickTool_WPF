@@ -45,6 +45,8 @@
     <system:String x:Key="target4">前排4</system:String>
     <system:String x:Key="target5">前排5</system:String>
     <system:String x:Key="target6">敵方</system:String>
+    <!-- Comman Content -->
+    <system:String x:Key="commanFunctionAutoWalk">自動走路</system:String>
     <!-- tabAutoBattle Content -->
     <system:String x:Key="labelAttackKey">攻擊熱鍵</system:String>
     <!-- tabAutoDefend Content -->
